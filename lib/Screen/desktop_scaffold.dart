@@ -23,7 +23,7 @@ class DesktopScaffold extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child:  ChatScreen(name: 'Vishesh')
+            child:  ChatScreen(name: 'Vishesh',fontSize: 24,)
           ),
           Expanded(
             flex: 1,

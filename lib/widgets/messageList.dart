@@ -43,7 +43,8 @@ class MessageList extends StatelessWidget {
                 size: size.width * 0.08,
               ),
               Container(
-                height: size.height * 0.05,
+                // height: size.height * 0.05,
+                padding: EdgeInsets.all(12),
                 width: size.width * 0.35,
                 decoration: BoxDecoration(
                     color: ColorConstants.yellowShade,

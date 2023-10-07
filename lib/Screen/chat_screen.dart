@@ -7,7 +7,8 @@ import 'package:talklytic/Constants/color_constants.dart';
 
 class ChatScreen extends StatelessWidget {
   String name;
-  ChatScreen({super.key, required this.name});
+  double  fontSize;
+  ChatScreen({super.key, required this.name,this.fontSize = 18});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class ChatScreen extends StatelessWidget {
                       name,
                       style: TextStyle(
                         fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: size.width * 0.055,
+                        fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                         color: ColorConstants.whiteShade,
                       ),
