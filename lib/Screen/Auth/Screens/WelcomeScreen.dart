@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:talklytic/Constants/color_constants.dart';
+import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
 
 import 'Register_Page.dart';

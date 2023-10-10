@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talklytic/Screen/Auth/Data/RegisterModal.dart';
 
-import '../../../Constants/color_constants.dart';
+import '../Data/color_constants.dart';
 import 'widgets/Text_fields.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPageScreen extends StatefulWidget {
   const RegisterPageScreen({super.key});
@@ -14,8 +17,12 @@ class RegisterPageScreen extends StatefulWidget {
 }
 
 class _RegisterPageScreenState extends State<RegisterPageScreen> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   bool obscureText = true;
   IconData iconData = Icons.visibility_off;
   final _formKey = GlobalKey<FormState>();
@@ -33,30 +40,30 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
               children: [
                 Expanded(
                   child: MyTextFieldWidget(
-                    controller: emailController,
+                    controller: firstNameController,
                     validator: (value) {
-                      if (emailController.text.isEmpty) {
+                      if (firstNameController.text.isEmpty) {
                         return 'Please entre a valid name';
                       }
                       return null;
                     },
                     hintText: 'First Name',
-                    obscureText: true,
+                    obscureText: false,
                     keyboardType: TextInputType.text,
                   ),
                 ),
                 SizedBox(width: size.width * 0.02),
                 Expanded(
                   child: MyTextFieldWidget(
-                    controller: emailController,
+                    controller: lastNameController,
                     validator: (value) {
-                      if (emailController.text.isEmpty) {
+                      if (lastNameController.text.isEmpty) {
                         return 'Please entre a valid name';
                       }
                       return null;
                     },
                     hintText: 'Last Name',
-                    obscureText: true,
+                    obscureText: false,
                     keyboardType: TextInputType.text,
                   ),
                 ),
@@ -75,7 +82,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
                 return null;
               },
               hintText: 'Email',
-              obscureText: true,
+              obscureText: false,
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icon(
                 Icons.email,
@@ -87,15 +94,15 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
           SizedBox(
             width: size.width * 0.9,
             child: MyTextFieldWidget(
-              controller: passwordController,
+              controller: phoneController,
               validator: (value) {
-                if (passwordController.text.isEmpty) {
+                if (phoneController.text.isEmpty) {
                   return 'Please entre a valid phone';
                 }
                 return null;
               },
               hintText: 'Phone',
-              obscureText: obscureText,
+              obscureText: false,
               keyboardType: TextInputType.text,
               prefixIcon: Icon(
                 Icons.phone,
@@ -120,7 +127,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
                         return null;
                       },
                       hintText: 'Password',
-                      obscureText: obscureText,
+                      obscureText: false,
                       keyboardType: TextInputType.text,
                       prefixIcon: Icon(
                         Icons.lock_rounded,
@@ -134,9 +141,9 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
                   child: SizedBox(
                     width: size.width * 0.9,
                     child: MyTextFieldWidget(
-                      controller: passwordController,
+                      controller: confirmPasswordController,
                       validator: (value) {
-                        if (passwordController.text.isEmpty) {
+                        if (confirmPasswordController.text.isEmpty) {
                           return 'Please entre a valid password';
                         }
                         return null;
@@ -160,8 +167,39 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {}
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  var auth = FirebaseAuth.instance;
+                  try {
+                    var email = emailController.text.trim();
+                    var password = passwordController.text.trim();
+                    var cred = await auth.createUserWithEmailAndPassword(
+                        email: email, password: password);
+                    print('user cred:- ${cred.user!.uid}');
+                    //Sign in:-
+                    var db = FirebaseFirestore.instance;
+                    
+
+                    db
+                        .collection('users')
+                        .doc(cred.user!.uid)
+                        .set(RegisterModal(
+                        userId: cred.user!.uid,
+                        FirstName: firstNameController.text.toString(),
+                        LastName: lastNameController.text.toString(),
+                        email: email,
+                        phone: phoneController.text.toString()).toJson());
+
+                    firstNameController.clear();
+                    lastNameController.clear();
+                    emailController.clear();
+                    phoneController.clear();
+                    passwordController.clear();
+                    confirmPasswordController.clear();
+                  } on FirebaseAuthException catch (e) {
+                    print('Error: ${e.code}');
+                  }
+                }
               },
               child: Text(
                 'Register'.toUpperCase(),

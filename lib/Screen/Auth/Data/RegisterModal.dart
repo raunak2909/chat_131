@@ -6,27 +6,32 @@ class RegisterModal {
   String LastName;
   String email;
   String phone;
-  String password;
-  String ConfirmPassword;
-  bool checkTerms;
 
-  RegisterModal(
-      {required this.FirstName,
-      required this.LastName,
-      required this.email,
-      required this.phone,
-      required this.password,
-      required this.ConfirmPassword,
-      required this.checkTerms});
+  RegisterModal({
+    this.userId,
+    required this.FirstName,
+    required this.LastName,
+    required this.email,
+    required this.phone,
+  });
 
-  factory RegisterModal.toJson(Map<String, dynamic> json) {
+  factory RegisterModal.fromJson(Map<String, dynamic> json) {
     return RegisterModal(
-        FirstName: 'FirstName',
-        LastName: 'LastName',
-        email: 'email',
-        phone: 'phone',
-        password: 'password',
-        ConfirmPassword: 'ConfirmPassword',
-        checkTerms: true);
+      userId: json['userId'],
+      FirstName: json['FirstName'],
+      LastName: json['LastName'],
+      email: json['email'],
+      phone: json['phone'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userId':userId,
+      'FirstName': FirstName,
+      'LasttName': LastName,
+      'email': email,
+      'phone': phone,
+    };
   }
 }

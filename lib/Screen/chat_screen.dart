@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:talklytic/Constants/color_constants.dart';
+import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 
 class ChatScreen extends StatelessWidget {
   String name;

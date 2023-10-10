@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Screens/widgets/Text_fields.dart';
 
-import '../../../Constants/color_constants.dart';
+import '../Data/color_constants.dart';
 
 class login_with_phone extends StatelessWidget {
   const login_with_phone({
@@ -131,7 +131,30 @@ class login_with_phone extends StatelessWidget {
                 child: Text('0'),
               ),
             ],
-          )
+          ),
+          SizedBox(height: size.height*0.04),
+          SizedBox(
+            width: size.width / 2,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorConstants.yellowShade,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+              ),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {}
+              },
+              child: Text(
+                'Login'.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: GoogleFonts.manrope().fontFamily,
+                  color: ColorConstants.blackShade,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Constants/dummy_data.dart';
 
-import '../Constants/color_constants.dart';
+import '../Screen/Auth/Data/color_constants.dart';
 import '../Screen/chat_screen.dart';
 
 class MessageList extends StatelessWidget {
@@ -44,7 +44,7 @@ class MessageList extends StatelessWidget {
               ),
               Container(
                 // height: size.height * 0.05,
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(6),
                 width: size.width * 0.35,
                 decoration: BoxDecoration(
                     color: ColorConstants.yellowShade,

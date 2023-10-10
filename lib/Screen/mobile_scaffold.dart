@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:talklytic/Constants/color_constants.dart';
+import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
 
 import '../widgets/messageList.dart';

@@ -9,16 +9,13 @@ import 'firebase_options.dart';
 import 'Screen/chat_screen.dart';
 import 'Responsive/homepage.dart';
 
-void main() {
-  // initializeFirebase();
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
-
-// void initializeFirebase() async {
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -35,7 +32,12 @@ class MyApp extends StatelessWidget {
       //   tabletScaffold: TabletScaffold(),
       //   desktopScaffld: DesktopScaffold(),
       // ),
-      home:const AuthenticationHomepage(),
+      home: const AuthenticationHomepage(),
     );
   }
+  void initializeFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
 }
