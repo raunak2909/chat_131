@@ -130,9 +130,29 @@ class login_with_phone extends StatelessWidget {
                 ),
                 child: Text('0'),
               ),
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
+                ),
+                child: Text('0'),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
+                ),
+                child: Text('0'),
+              ),
             ],
           ),
-          SizedBox(height: size.height*0.04),
+          SizedBox(height: size.height * 0.04),
           SizedBox(
             width: size.width / 2,
             child: ElevatedButton(
