@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/widgets/Text_fields.dart';
+import 'package:talklytic/Screen/mobile_scaffold.dart';
 
 import 'login_phone.dart';
 
@@ -40,7 +42,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                 return null;
               },
               hintText: 'Email',
-              obscureText: true,
+              obscureText: false,
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icon(
                 Icons.email,
@@ -140,7 +142,21 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                 ),
               ),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {}
+                if (_formKey.currentState!.validate()) {
+                  var cred = FirebaseAuth.instance;
+                  try {
+                    cred.signInWithEmailAndPassword(
+                        email: emailController.text.toString(),
+                        password: passwordController.text.toString());
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MobileScaffold(),
+                        ));
+                  } on FirebaseAuthException catch (e) {
+                    print(e.code);
+                  }
+                }
               },
               child: Text(
                 'Login'.toUpperCase(),

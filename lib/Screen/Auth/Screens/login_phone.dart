@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +22,13 @@ class login_with_phone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mverificationId = '';
+    TextEditingController otp1 = TextEditingController();
+    TextEditingController otp2 = TextEditingController();
+    TextEditingController otp3 = TextEditingController();
+    TextEditingController otp4 = TextEditingController();
+    TextEditingController otp5 = TextEditingController();
+    TextEditingController otp6 = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     return Container(
       alignment: Alignment.center,
@@ -55,7 +63,7 @@ class login_with_phone extends StatelessWidget {
                 return null;
               },
               hintText: 'Entre your Phone',
-              obscureText: obscureText,
+              obscureText: false,
               keyboardType: TextInputType.number,
               prefixIcon: Icon(
                 Icons.phone,
@@ -73,8 +81,24 @@ class login_with_phone extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {}
+              onPressed: () async {
+                await FirebaseAuth.instance.verifyPhoneNumber(
+                  phoneNumber: '+91${phoneController.text.toString()}',
+                  verificationCompleted: (PhoneAuthCredential credential) {
+                    var cred = FirebaseAuth.instance;
+                    cred
+                        .signInWithCredential(credential)
+                        .then((value) => print(value.user!.uid));
+                  },
+                  verificationFailed: (FirebaseAuthException e) {
+                    print('varification failed:${e.message}');
+                  },
+                  codeSent: (String verificationId, int? resendToken) {
+                    mverificationId = verificationId;
+                    print('code sent:$verificationId');
+                  },
+                  codeAutoRetrievalTimeout: (String verificationId) {},
+                );
               },
               child: Text(
                 'Send OTP'.toUpperCase(),
@@ -98,7 +122,8 @@ class login_with_phone extends StatelessWidget {
                   color: ColorConstants.whiteShade,
                   borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
                 ),
-                child: Text('0'),
+                child: otpTextField(
+                    context: context, controller: otp1, mfocus: true),
               ),
               Container(
                 alignment: Alignment.center,
@@ -108,7 +133,8 @@ class login_with_phone extends StatelessWidget {
                   color: ColorConstants.whiteShade,
                   borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
                 ),
-                child: Text('0'),
+                child: otpTextField(
+                    context: context, controller: otp2, mfocus: false),
               ),
               Container(
                 alignment: Alignment.center,
@@ -118,7 +144,8 @@ class login_with_phone extends StatelessWidget {
                   color: ColorConstants.whiteShade,
                   borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
                 ),
-                child: Text('0'),
+                child: otpTextField(
+                    context: context, controller: otp3, mfocus: false),
               ),
               Container(
                 alignment: Alignment.center,
@@ -128,7 +155,8 @@ class login_with_phone extends StatelessWidget {
                   color: ColorConstants.whiteShade,
                   borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
                 ),
-                child: Text('0'),
+                child: otpTextField(
+                    context: context, controller: otp4, mfocus: false),
               ),
               Container(
                 alignment: Alignment.center,
@@ -138,7 +166,8 @@ class login_with_phone extends StatelessWidget {
                   color: ColorConstants.whiteShade,
                   borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
                 ),
-                child: Text('0'),
+                child: otpTextField(
+                    context: context, controller: otp5, mfocus: false),
               ),
               Container(
                 alignment: Alignment.center,
@@ -148,7 +177,8 @@ class login_with_phone extends StatelessWidget {
                   color: ColorConstants.whiteShade,
                   borderRadius: BorderRadius.all(Radius.elliptical(12, 21)),
                 ),
-                child: Text('0'),
+                child: otpTextField(
+                    context: context, controller: otp6, mfocus: false),
               ),
             ],
           ),
@@ -163,7 +193,25 @@ class login_with_phone extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {}
+                if (_formKey.currentState!.validate()) {
+                  if (otp1.text.isNotEmpty &&
+                      otp2.text.isNotEmpty &&
+                      otp3.text.isNotEmpty &&
+                      otp4.text.isNotEmpty &&
+                      otp5.text.isNotEmpty &&
+                      otp6.text.isNotEmpty) {
+                    var otp =
+                        '${otp1.text.toString()}${otp2.text.toString()}${otp3.text.toString()}${otp4.text.toString()}${otp5.text.toString()}${otp6.text.toString()}';
+                    print('otp: $otp');
+
+                    var cred = PhoneAuthProvider.credential(
+                        verificationId: mverificationId, smsCode: otp);
+                    var data = FirebaseAuth.instance;
+                    data
+                        .signInWithCredential(cred)
+                        .then((value) => print('data'));
+                  }
+                }
               },
               child: Text(
                 'Login'.toUpperCase(),
@@ -176,6 +224,29 @@ class login_with_phone extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget otpTextField(
+      {required BuildContext context,
+      required TextEditingController controller,
+      required bool mfocus}) {
+    return TextField(
+      controller: controller,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          FocusScope.of(context).nextFocus();
+        }
+      },
+      textAlign: TextAlign.center,
+      maxLines: 1,
+      maxLength: 1,
+      keyboardType: TextInputType.number,
+      autofocus: mfocus,
+      decoration: InputDecoration(
+        counterText: '',
+        border: InputBorder.none,
       ),
     );
   }
