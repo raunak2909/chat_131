@@ -18,7 +18,11 @@ class DesktopScaffold extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: ChatMessageList(size: size / 3,fontSize: 12,fontWeight: FontWeight.bold,),
+              child: ChatMessageList(
+                size: size / 3,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Expanded(

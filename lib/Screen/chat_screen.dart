@@ -44,8 +44,7 @@ class ChatScreen extends StatelessWidget {
                             Text(
                               name,
                               style: TextStyle(
-                                fontFamily:
-                                    GoogleFonts.manrope().fontFamily,
+                                fontFamily: GoogleFonts.manrope().fontFamily,
                                 fontSize: fontSize,
                                 fontWeight: FontWeight.bold,
                                 color: ColorConstants.whiteShade,
@@ -53,8 +52,7 @@ class ChatScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Icon(
                                   FontAwesomeIcons.video,
@@ -140,8 +138,7 @@ class ChatScreen extends StatelessWidget {
                             Text(
                               name,
                               style: TextStyle(
-                                fontFamily:
-                                    GoogleFonts.manrope().fontFamily,
+                                fontFamily: GoogleFonts.manrope().fontFamily,
                                 fontSize: fontSize,
                                 fontWeight: FontWeight.bold,
                                 color: ColorConstants.whiteShade,
@@ -149,8 +146,7 @@ class ChatScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Icon(
                                   FontAwesomeIcons.video,
