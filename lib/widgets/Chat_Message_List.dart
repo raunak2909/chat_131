@@ -142,12 +142,15 @@ class ChatMessageList extends StatelessWidget {
                   ),
                   title: InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ChatScreen(name: '${PinnedMsg.name[index]}'),
-                          ));
+                      if (MediaQuery.of(context).orientation ==
+                          Orientation.portrait) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ChatScreen(name: '${PinnedMsg.name[index]}'),
+                            ));
+                      }
                     },
                     child: Text(
                       '${PinnedMsg.name[index]}',
@@ -207,12 +210,15 @@ class ChatMessageList extends StatelessWidget {
                   ),
                   title: InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ChatScreen(name: '${AllMsg.name[index]}'),
-                          ));
+                      if (MediaQuery.of(context).orientation ==
+                          Orientation.portrait) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ChatScreen(name: '${AllMsg.name[index]}'),
+                            ));
+                      }
                     },
                     child: Text(
                       '${AllMsg.name[index]}',

@@ -9,27 +9,22 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              height: size.height,
-              width: size.width * 0.7,
-              decoration: BoxDecoration(
-                color: ColorConstants.blackShade,
-              ),
-              child: Column(
-                children: [
-                  
-                ],
-              ),
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            height: size.height,
+            width: size.width * 0.7,
+            decoration: BoxDecoration(
+              color: ColorConstants.blackShade,
+            ),
+            child: Column(
+              children: [],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

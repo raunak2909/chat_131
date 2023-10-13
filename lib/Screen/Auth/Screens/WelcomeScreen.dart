@@ -1,16 +1,20 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, must_be_immutable
 
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
 
 import 'Register_Page.dart';
 
 class AuthenticationHomepage extends StatefulWidget {
-  const AuthenticationHomepage({super.key});
+  Widget LoginScreen;
+  AuthenticationHomepage({
+    Key? key,
+    required this.LoginScreen,
+  }) : super(key: key);
 
   @override
   State<AuthenticationHomepage> createState() => _AuthenticationHomepageState();
@@ -34,43 +38,9 @@ class _AuthenticationHomepageState extends State<AuthenticationHomepage>
         child: SizedBox(
           height: size.height,
           child: Stack(children: [
-            Align(
-              alignment: AlignmentDirectional(20, -1.2),
-              child: Container(
-                height: size.width * 1.5,
-                width: size.width,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // color: Color(0xffba68c8),
-                  color: const Color.fromARGB(183, 255, 214, 79),
+            Container(
+                // decoration: BoxDecoration(gradient: []),
                 ),
-              ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(-2.7, -1.2),
-              child: Container(
-                height: size.width / 1.3,
-                width: size.width / 1.3,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromARGB(178, 244, 143, 177)),
-              ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(2.7, -1.2),
-              child: Container(
-                height: size.width / 1.3,
-                width: size.width / 1.3,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromARGB(197, 186, 104, 200),
-                ),
-              ),
-            ),
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
-              child: Container(),
-            ),
             SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -114,7 +84,7 @@ class _AuthenticationHomepageState extends State<AuthenticationHomepage>
                           style: TextStyle(
                             fontFamily: GoogleFonts.dancingScript().fontFamily,
                             fontSize: 52,
-                            color: ColorConstants.yellowShade,
+                            color: ColorConstants.blackShade,
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 4,
@@ -132,7 +102,6 @@ class _AuthenticationHomepageState extends State<AuthenticationHomepage>
             Align(
               alignment: Alignment.bottomCenter,
               child: SizedBox(
-               
                 height: size.height / 1.8,
                 child: Column(
                   children: [
@@ -174,7 +143,7 @@ class _AuthenticationHomepageState extends State<AuthenticationHomepage>
                       child: TabBarView(
                         controller: _tabController,
                         children: [
-                          LoginPageScreen(),
+                          LoginPageScreen(LoginScreen: widget.LoginScreen),
                           RegisterPageScreen(),
                         ],
                       ),

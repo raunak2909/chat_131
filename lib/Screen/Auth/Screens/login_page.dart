@@ -10,7 +10,8 @@ import 'package:talklytic/Screen/mobile_scaffold.dart';
 import 'login_phone.dart';
 
 class LoginPageScreen extends StatefulWidget {
-  const LoginPageScreen({super.key});
+  Widget LoginScreen;
+  LoginPageScreen({super.key, required this.LoginScreen});
 
   @override
   State<LoginPageScreen> createState() => _LoginPageScreenState();

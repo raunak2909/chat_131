@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
+import 'package:talklytic/x.dart';
 
 import '../widgets/Chat_Message_List.dart';
 
@@ -12,11 +13,14 @@ class MobileScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            color: ColorConstants.purpleShade,
-          ),
+      // appBar: AppBar(),
+      // drawer: const MyDrawer(),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: ColorConstants.purpleShade,
+        ),
+        child: SingleChildScrollView(
+         
           child: Column(
             children: [
               SafeArea(
@@ -54,7 +58,9 @@ class MobileScaffold extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              const MyDrawer();
+                              // const MyDrawer();
+        
+        
                             },
                             child: Container(
                               padding: const EdgeInsets.all(2),
@@ -77,6 +83,8 @@ class MobileScaffold extends StatelessWidget {
                               ),
                             ),
                           ),
+        
+                          const Button()
                         ],
                       ),
                       RichText(

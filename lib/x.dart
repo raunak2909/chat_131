@@ -1,36 +1,101 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:popover/popover.dart';
+import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 
-class xScreen extends StatelessWidget {
-  const xScreen({super.key});
+class Button extends StatelessWidget {
+  const Button({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: GestureDetector(
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+          // color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          // boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)],
+          border: Border.all(color: ColorConstants.whiteShade)),
+      child: GestureDetector(
+        child: const Center(
+            child: Icon(
+          Icons.menu,
+          color: ColorConstants.whiteShade,
+        )),
+        onTap: () {
+          showPopover(
+            context: context,
+            bodyBuilder: (context) => const ListItems(),
+            onPop: () => print('Popover was popped!'),
+            direction: PopoverDirection.bottom,
+            width: 200,
+            height: 400,
+            arrowHeight: 15,
+            arrowWidth: 30,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ListItems extends StatelessWidget {
+  const ListItems({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListView(
+        padding: const EdgeInsets.all(8),
+        children: [
+          InkWell(
             onTap: () {
-              showPopover(
-                height: 250,
-                width: 250,
-                backgroundColor: Colors.purpleAccent,
-                context: context,
-                onPop: () {
-                  print('popped!!');
-                },
-                bodyBuilder: (context) {
-                  return Container(
-                    color: Colors.amber,
-                    height: 250,
-                    width: 250,
-                    child: Text('data'),
-                  );
-                },
-              );
+              Navigator.of(context)
+                ..pop()
+                ..push(
+                  MaterialPageRoute<SecondRoute>(
+                    builder: (context) => SecondRoute(),
+                  ),
+                );
             },
-            child: Icon(Icons.horizontal_rule)),
+            child: Container(
+              height: 50,
+              color: Colors.amber[100],
+              child: const Center(child: Text('Entry A')),
+            ),
+          ),
+          const Divider(),
+          Container(
+            height: 50,
+            color: Colors.amber[200],
+            child: const Center(child: Text('Entry B')),
+          ),
+          const Divider(),
+          Container(
+            height: 50,
+            color: Colors.amber[300],
+            child: const Center(child: Text('Entry C')),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Go back!'),
+        ),
       ),
     );
   }
