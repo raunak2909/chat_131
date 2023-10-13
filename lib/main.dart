@@ -27,12 +27,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: const HomePage(
-      //   mobileScaffold: MobileScaffold(),
-      //   tabletScaffold: TabletScaffold(),
-      //   desktopScaffld: DesktopScaffold(),
-      // ),
-      home: const AuthenticationHomepage(),
+      home: const HomePage(
+        mobileScaffold: MobileScaffold(),
+        tabletScaffold: TabletScaffold(),
+        desktopScaffld: DesktopScaffold(),
+      ),
+      // home: const AuthenticationHomepage(),
     );
   }
   void initializeFirebase() async {

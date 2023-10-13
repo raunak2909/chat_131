@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
 
-import '../widgets/messageList.dart';
+import '../widgets/Chat_Message_List.dart';
 
 class MobileScaffold extends StatelessWidget {
   const MobileScaffold({super.key});
@@ -138,7 +138,7 @@ class MobileScaffold extends StatelessWidget {
                   ),
                 ),
               ),
-              MessageList(size: size),
+              ChatMessageList(size: size),
             ],
           ),
         ),

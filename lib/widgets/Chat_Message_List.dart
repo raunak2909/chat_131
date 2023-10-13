@@ -8,13 +8,17 @@ import 'package:talklytic/Constants/dummy_data.dart';
 import '../Screen/Auth/Data/color_constants.dart';
 import '../Screen/chat_screen.dart';
 
-class MessageList extends StatelessWidget {
-  const MessageList({
+class ChatMessageList extends StatelessWidget {
+  const ChatMessageList({
     super.key,
     required this.size,
+    this.fontSize = 15,
+    this.fontWeight = FontWeight.normal,
   });
 
   final Size size;
+  final double fontSize;
+  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +44,9 @@ class MessageList extends StatelessWidget {
             children: [
               Icon(
                 Icons.search,
-                size: size.width * 0.08,
+                size: fontSize * 2,
               ),
               Container(
-                // height: size.height * 0.05,
                 padding: EdgeInsets.all(6),
                 width: size.width * 0.35,
                 decoration: BoxDecoration(
@@ -56,15 +59,15 @@ class MessageList extends StatelessWidget {
                       'Direct Message',
                       style: TextStyle(
                         fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: size.width * 0.033,
+                        fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                         color: ColorConstants.blackShade,
                       ),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      height: size.height * 0.03,
-                      width: size.width * 0.04,
+                      padding: EdgeInsets.all(2),
+                      width: size.width * 0.025,
                       decoration: BoxDecoration(
                           color: ColorConstants.blackShade,
                           borderRadius: BorderRadius.circular(8)),
@@ -72,7 +75,7 @@ class MessageList extends StatelessWidget {
                         '4',
                         style: TextStyle(
                           fontFamily: GoogleFonts.manrope().fontFamily,
-                          fontSize: size.width * 0.035,
+                          fontSize: fontSize / 1.1,
                           fontWeight: FontWeight.bold,
                           color: ColorConstants.whiteShade,
                         ),
@@ -82,8 +85,8 @@ class MessageList extends StatelessWidget {
                 ),
               ),
               Container(
-                height: size.height * 0.05,
-                width: size.width * 0.3,
+                padding: EdgeInsets.all(6),
+                width: size.width * 0.25,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12)),
@@ -94,7 +97,7 @@ class MessageList extends StatelessWidget {
                       'Groupe',
                       style: TextStyle(
                         fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: size.width * 0.04,
+                        fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                         color: ColorConstants.blackShade,
                       ),
@@ -103,7 +106,7 @@ class MessageList extends StatelessWidget {
                       '2',
                       style: TextStyle(
                         fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: size.width * 0.03,
+                        fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                         color: ColorConstants.blackShade,
                       ),
@@ -118,12 +121,12 @@ class MessageList extends StatelessWidget {
             'Pinned Message',
             style: TextStyle(
               fontFamily: GoogleFonts.manrope().fontFamily,
-              fontSize: size.width * 0.05,
+              fontSize: fontSize * 1.2,
               color: ColorConstants.blackShade,
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: EdgeInsets.symmetric(vertical: 6),
             child: ListView.builder(
               shrinkWrap: true,
               padding: EdgeInsets.zero,
@@ -135,7 +138,7 @@ class MessageList extends StatelessWidget {
                   leading: CircleAvatar(
                     foregroundImage: NetworkImage(
                         'https://avatars.githubusercontent.com/u/76419786?v=4'),
-                    radius: size.height * 0.05,
+                    radius: fontSize * 2.5,
                   ),
                   title: InkWell(
                     onTap: () {
@@ -150,7 +153,8 @@ class MessageList extends StatelessWidget {
                       '${PinnedMsg.name[index]}',
                       style: TextStyle(
                         fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: size.width * 0.05,
+                        fontSize: fontSize * 1.2,
+                        fontWeight: fontWeight,
                         color: ColorConstants.blackShade,
                       ),
                     ),
@@ -159,7 +163,7 @@ class MessageList extends StatelessWidget {
                     'msg..',
                     style: TextStyle(
                       fontFamily: GoogleFonts.manrope().fontFamily,
-                      fontSize: size.width * 0.03,
+                      fontSize: fontSize / 1.4,
                       color: ColorConstants.blackShade,
                     ),
                   ),
@@ -169,7 +173,7 @@ class MessageList extends StatelessWidget {
                       Text('Time'),
                       Icon(
                         FontAwesomeIcons.checkDouble,
-                        size: size.width * 0.04,
+                        size: fontSize,
                       ),
                     ],
                   ),
@@ -182,7 +186,7 @@ class MessageList extends StatelessWidget {
             'All Message',
             style: TextStyle(
               fontFamily: GoogleFonts.manrope().fontFamily,
-              fontSize: size.width * 0.05,
+              fontSize: fontSize * 1.2,
               color: ColorConstants.blackShade,
             ),
           ),
@@ -199,7 +203,7 @@ class MessageList extends StatelessWidget {
                   leading: CircleAvatar(
                     foregroundImage: NetworkImage(
                         'https://avatars.githubusercontent.com/u/76419786?v=4'),
-                    radius: size.height * 0.05,
+                    radius: fontSize * 2.5,
                   ),
                   title: InkWell(
                     onTap: () {
@@ -214,7 +218,8 @@ class MessageList extends StatelessWidget {
                       '${AllMsg.name[index]}',
                       style: TextStyle(
                         fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: size.width * 0.05,
+                        fontSize: fontSize * 1.2,
+                        fontWeight: fontWeight,
                         color: ColorConstants.blackShade,
                       ),
                     ),
@@ -223,7 +228,7 @@ class MessageList extends StatelessWidget {
                     'msg',
                     style: TextStyle(
                       fontFamily: GoogleFonts.manrope().fontFamily,
-                      fontSize: size.width * 0.03,
+                      fontSize: fontSize / 1.4,
                       color: ColorConstants.blackShade,
                     ),
                   ),
@@ -233,7 +238,7 @@ class MessageList extends StatelessWidget {
                       Text('Time'),
                       Icon(
                         FontAwesomeIcons.checkDouble,
-                        size: size.width * 0.04,
+                        size: fontSize,
                       ),
                     ],
                   ),

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../widgets/messageList.dart';
+import '../widgets/Chat_Message_List.dart';
 import 'chat_screen.dart';
 
 class TabletScaffold extends StatelessWidget {
@@ -15,9 +15,13 @@ class TabletScaffold extends StatelessWidget {
       backgroundColor: Colors.green.shade50,
       body: Row(
         children: [
-          Expanded(
+          SizedBox(
+            width: size.width * 0.4,
             child: SingleChildScrollView(
-              child: MessageList(size: size / 2.5),
+              child: ChatMessageList(
+                size: size / 2.6,
+                fontSize: 12,
+              ),
             ),
           ),
           Expanded(

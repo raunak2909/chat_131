@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:talklytic/Screen/chat_screen.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
 
-import '../widgets/messageList.dart';
+import '../widgets/Chat_Message_List.dart';
 
 class DesktopScaffold extends StatelessWidget {
   const DesktopScaffold({super.key});
@@ -18,13 +18,15 @@ class DesktopScaffold extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: MessageList(size: size / 3),
+              child: ChatMessageList(size: size / 3,fontSize: 12,fontWeight: FontWeight.bold,),
             ),
           ),
           Expanded(
-            flex: 2,
-            child:  ChatScreen(name: 'Vishesh',fontSize: 24,)
-          ),
+              flex: 2,
+              child: ChatScreen(
+                name: 'Vishesh',
+                fontSize: 24,
+              )),
           Expanded(
             flex: 1,
             child: Container(
