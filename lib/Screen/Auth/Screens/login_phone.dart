@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print, non_constant_identifier_names
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +29,6 @@ class login_with_phone extends StatelessWidget {
     TextEditingController otp4 = TextEditingController();
     TextEditingController otp5 = TextEditingController();
     TextEditingController otp6 = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
     return Container(
       alignment: Alignment.center,
       height: size.height / 2,
@@ -52,7 +51,9 @@ class login_with_phone extends StatelessWidget {
           Divider(thickness: 1.5),
           SizedBox(height: size.height * 0.04),
           SizedBox(
-            width: size.width * 0.9,
+            width: MediaQuery.of(context).orientation == Orientation.portrait
+                ? size.width * 0.9
+                : size.width /2,
             child: MyTextFieldWidget(
               controller: phoneController,
               validator: (value) {
@@ -73,7 +74,9 @@ class login_with_phone extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.02),
           SizedBox(
-            width: size.width / 2,
+            width: MediaQuery.of(context).orientation == Orientation.portrait
+                ? size.width / 2
+                : size.width / 8,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorConstants.yellowShade,
@@ -111,7 +114,65 @@ class login_with_phone extends StatelessWidget {
             ),
           ),
           SizedBox(height: size.height * 0.04),
-          Row(
+          OTP_input_Container(context, otp1, otp2, otp3, otp4, otp5, otp6),
+          SizedBox(height: size.height * 0.04),
+          SizedBox(
+            width: MediaQuery.of(context).orientation == Orientation.portrait
+                ? size.width / 2
+                : size.width / 6,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorConstants.yellowShade,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+              ),
+              onPressed: () {
+                if (phoneController.text.isNotEmpty) {
+                  if (otp1.text.isNotEmpty &&
+                      otp2.text.isNotEmpty &&
+                      otp3.text.isNotEmpty &&
+                      otp4.text.isNotEmpty &&
+                      otp5.text.isNotEmpty &&
+                      otp6.text.isNotEmpty) {
+                    var otp =
+                        '${otp1.text.toString()}${otp2.text.toString()}${otp3.text.toString()}${otp4.text.toString()}${otp5.text.toString()}${otp6.text.toString()}';
+                    print('otp: $otp');
+
+                    var cred = PhoneAuthProvider.credential(
+                        verificationId: mverificationId, smsCode: otp);
+                    var data = FirebaseAuth.instance;
+                    data
+                        .signInWithCredential(cred)
+                        .then((value) => print('data'));
+                  }
+                }
+              },
+              child: Text(
+                'Login'.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: GoogleFonts.manrope().fontFamily,
+                  color: ColorConstants.blackShade,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row OTP_input_Container(
+      BuildContext context,
+      TextEditingController otp1,
+      TextEditingController otp2,
+      TextEditingController otp3,
+      TextEditingController otp4,
+      TextEditingController otp5,
+      TextEditingController otp6) {
+    return MediaQuery.of(context).orientation == Orientation.portrait
+        ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
@@ -181,51 +242,78 @@ class login_with_phone extends StatelessWidget {
                     context: context, controller: otp6, mfocus: false),
               ),
             ],
-          ),
-          SizedBox(height: size.height * 0.04),
-          SizedBox(
-            width: size.width / 2,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstants.yellowShade,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.05,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 10)),
                 ),
+                child: otpTextField(
+                    context: context, controller: otp1, mfocus: true),
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  if (otp1.text.isNotEmpty &&
-                      otp2.text.isNotEmpty &&
-                      otp3.text.isNotEmpty &&
-                      otp4.text.isNotEmpty &&
-                      otp5.text.isNotEmpty &&
-                      otp6.text.isNotEmpty) {
-                    var otp =
-                        '${otp1.text.toString()}${otp2.text.toString()}${otp3.text.toString()}${otp4.text.toString()}${otp5.text.toString()}${otp6.text.toString()}';
-                    print('otp: $otp');
-
-                    var cred = PhoneAuthProvider.credential(
-                        verificationId: mverificationId, smsCode: otp);
-                    var data = FirebaseAuth.instance;
-                    data
-                        .signInWithCredential(cred)
-                        .then((value) => print('data'));
-                  }
-                }
-              },
-              child: Text(
-                'Login'.toUpperCase(),
-                style: TextStyle(
-                  fontFamily: GoogleFonts.manrope().fontFamily,
-                  color: ColorConstants.blackShade,
-                  fontSize: 22,
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.05,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 10)),
                 ),
+                child: otpTextField(
+                    context: context, controller: otp2, mfocus: false),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.05,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 10)),
+                ),
+                child: otpTextField(
+                    context: context, controller: otp3, mfocus: false),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.05,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 10)),
+                ),
+                child: otpTextField(
+                    context: context, controller: otp4, mfocus: false),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.05,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 10)),
+                ),
+                child: otpTextField(
+                    context: context, controller: otp5, mfocus: false),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: size.height * 0.06,
+                width: size.width * 0.05,
+                decoration: BoxDecoration(
+                  color: ColorConstants.whiteShade,
+                  borderRadius: BorderRadius.all(Radius.elliptical(12, 10)),
+                ),
+                child: otpTextField(
+                    context: context, controller: otp6, mfocus: false),
+              ),
+            ],
+          );
   }
 
   Widget otpTextField(

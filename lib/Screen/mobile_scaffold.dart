@@ -1,26 +1,35 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
-import 'package:talklytic/x.dart';
 
 import '../widgets/Chat_Message_List.dart';
 
 class MobileScaffold extends StatelessWidget {
-  const MobileScaffold({super.key});
+  MobileScaffold({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // appBar: AppBar(),
-      // drawer: const MyDrawer(),
+      floatingActionButton: SpeedDial(
+        activeIcon: Icons.clear,
+        activeBackgroundColor: Colors.redAccent,
+        backgroundColor: ColorConstants.purpleShade,
+        children: [
+          SpeedDialChild(child: Icon(Icons.group), label: 'New chat'),
+          SpeedDialChild(child: Icon(Icons.group), label: 'New group'),
+        ],
+        child: Icon(Icons.forum, color: ColorConstants.whiteShade),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           color: ColorConstants.purpleShade,
         ),
         child: SingleChildScrollView(
-         
           child: Column(
             children: [
               SafeArea(
@@ -59,8 +68,6 @@ class MobileScaffold extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               // const MyDrawer();
-        
-        
                             },
                             child: Container(
                               padding: const EdgeInsets.all(2),
@@ -83,8 +90,6 @@ class MobileScaffold extends StatelessWidget {
                               ),
                             ),
                           ),
-        
-                          const Button()
                         ],
                       ),
                       RichText(

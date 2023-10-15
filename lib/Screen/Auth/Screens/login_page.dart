@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talklytic/Screen/Auth/Data/auth.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/widgets/Text_fields.dart';
 import 'package:talklytic/Screen/mobile_scaffold.dart';
@@ -144,19 +145,12 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  var cred = FirebaseAuth.instance;
-                  try {
-                    cred.signInWithEmailAndPassword(
-                        email: emailController.text.toString(),
-                        password: passwordController.text.toString());
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MobileScaffold(),
-                        ));
-                  } on FirebaseAuthException catch (e) {
-                    print(e.code);
-                  }
+                  AuthUsr().signinWithEmailandPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                    context: context,
+                    loginscreen: widget.LoginScreen,
+                  );
                 }
               },
               child: Text(

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:popover/popover.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -40,7 +39,7 @@ class ChatScreen extends StatelessWidget {
                                 color: ColorConstants.whiteShade,
                               ),
                             ),
-                            SizedBox(width: size.width * 0.2),
+                            SizedBox(width: size.width * 0.3),
                             Text(
                               name,
                               style: TextStyle(
@@ -52,7 +51,7 @@ class ChatScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   FontAwesomeIcons.video,
@@ -81,51 +80,6 @@ class ChatScreen extends StatelessWidget {
                                   Icons.search,
                                   color: ColorConstants.whiteShade,
                                   size: fontSize / 0.9,
-                                ),
-                                SizedBox(width: fontSize / 6),
-                                GestureDetector(
-                                  onTap: () {
-                                    showPopover(
-                                      context: context,
-                                      bodyBuilder: (context) {
-                                        return SafeArea(
-                                          child: Container(
-                                            color: Colors.red,
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: ColorConstants
-                                                          .purpleShade),
-                                                  child: Text('Profile'),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: ColorConstants
-                                                          .purpleShade),
-                                                  child: Text('Profile'),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: ColorConstants
-                                                          .purpleShade),
-                                                  child: Text('Profile'),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      width: 250,
-                                      height: 250,
-                                      backgroundColor: Colors.green.shade300,
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.more_horiz,
-                                    color: ColorConstants.whiteShade,
-                                    size: fontSize / 0.9,
-                                  ),
                                 ),
                               ],
                             )
@@ -134,7 +88,7 @@ class ChatScreen extends StatelessWidget {
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(width: size.width * 0.2),
+                            SizedBox(width: size.width * 0.05),
                             Text(
                               name,
                               style: TextStyle(
@@ -177,32 +131,25 @@ class ChatScreen extends StatelessWidget {
                                   size: fontSize / 0.9,
                                 ),
                                 SizedBox(width: fontSize / 6),
-                                GestureDetector(
-                                  onTap: () {
-                                    showPopover(
-                                      context: context,
-                                      bodyBuilder: (context) {
-                                        return SafeArea(
-                                          child: Container(
-                                            color: Colors.red,
-                                            child: Column(
-                                              children: [
-                                                Text('data'),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
+                                PopupMenuButton(
+                                  color: Colors.purple.shade300,
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(child: Text('Profile')),
+                                    PopupMenuItem(
+                                        child: Text('Select message')),
+                                    PopupMenuItem(child: Text('Clear chat')),
+                                    PopupMenuItem(child: Text('Delete chat')),
+                                    PopupMenuItem(child: Text('Report')),
+                                    PopupMenuItem(child: Text('Block')),
+                                  ],
                                   child: Icon(
                                     Icons.more_horiz,
                                     color: ColorConstants.whiteShade,
                                     size: fontSize / 0.9,
                                   ),
-                                ),
+                                )
                               ],
-                            )
+                            ),
                           ],
                         )),
               SizedBox(height: fontSize),
@@ -221,64 +168,136 @@ class ChatScreen extends StatelessWidget {
                       Expanded(child: Container()),
 
                       /// =======Text Field & more ======//
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 20.0),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Icon(
-                                Icons.add,
-                                size: fontSize,
-                                color: ColorConstants.blackShade,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.grey.shade200),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Say Something...',
-                                            hintStyle: TextStyle(
-                                              fontFamily: GoogleFonts.manrope()
-                                                  .fontFamily,
-                                            )),
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 20.0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(
+                                      Icons.add,
+                                      size: fontSize,
+                                      color: ColorConstants.blackShade,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Colors.grey.shade200),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextField(
+                                              textAlign: TextAlign.center,
+                                              decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: 'Say Something...',
+                                                  hintStyle: TextStyle(
+                                                    fontFamily:
+                                                        GoogleFonts.manrope()
+                                                            .fontFamily,
+                                                  )),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Icon(
+                                              FontAwesomeIcons.faceSmile,
+                                              color: Colors.grey.shade700,
+                                              size: fontSize,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Icon(
-                                        FontAwesomeIcons.faceSmile,
-                                        color: Colors.grey.shade700,
-                                        size: fontSize,
+                                  ),
+                                  SizedBox(width: fontSize),
+                                  CircleAvatar(
+                                    backgroundColor: ColorConstants.purpleShade,
+                                    child: Icon(
+                                      Icons.mic,
+                                      color: ColorConstants.whiteShade,
+                                      size: fontSize,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 20.0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(
+                                      Icons.add,
+                                      size: fontSize,
+                                      color: ColorConstants.blackShade,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Colors.grey.shade200),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextField(
+                                              textAlign: TextAlign.start,
+                                              decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: ' Say Something...',
+                                                  hintStyle: TextStyle(
+                                                    fontFamily:
+                                                        GoogleFonts.manrope()
+                                                            .fontFamily,
+                                                  )),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Icon(
+                                              FontAwesomeIcons.faceSmile,
+                                              color: Colors.grey.shade700,
+                                              size: fontSize,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  SizedBox(width: fontSize),
+                                  CircleAvatar(
+                                    backgroundColor: ColorConstants.purpleShade,
+                                    child: Icon(
+                                      Icons.send,
+                                      color: ColorConstants.whiteShade,
+                                      size: fontSize,
+                                    ),
+                                  ),
+                                  SizedBox(width: fontSize),
+                                  CircleAvatar(
+                                    backgroundColor: ColorConstants.purpleShade,
+                                    child: Icon(
+                                      Icons.mic,
+                                      color: ColorConstants.whiteShade,
+                                      size: fontSize,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(width: fontSize),
-                            CircleAvatar(
-                              backgroundColor: ColorConstants.purpleShade,
-                              child: Icon(
-                                Icons.mic,
-                                color: ColorConstants.whiteShade,
-                                size: fontSize,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       SizedBox(height: fontSize),
                     ],
                   ),

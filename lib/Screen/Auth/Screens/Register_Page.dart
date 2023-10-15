@@ -1,13 +1,13 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:talklytic/Screen/Auth/Data/RegisterModal.dart';
+
+import 'package:talklytic/Screen/Auth/Data/auth.dart';
 
 import '../Data/color_constants.dart';
 import 'widgets/Text_fields.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPageScreen extends StatefulWidget {
   const RegisterPageScreen({super.key});
@@ -169,27 +169,14 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  var auth = FirebaseAuth.instance;
                   try {
-                    var email = emailController.text.trim();
-                    var password = passwordController.text.trim();
-                    var cred = await auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
-                    print('user cred:- ${cred.user!.uid}');
-                    //Sign in:-
-                    var db = FirebaseFirestore.instance;
-                    
-
-                    db
-                        .collection('users')
-                        .doc(cred.user!.uid)
-                        .set(RegisterModal(
-                        userId: cred.user!.uid,
-                        FirstName: firstNameController.text.toString(),
-                        LastName: lastNameController.text.toString(),
-                        email: email,
-                        phone: phoneController.text.toString()).toJson());
-
+                    AuthUsr().createUserWithEmailAndPassword(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                      firstNameController: firstNameController.text.trim(),
+                      lastNameController: lastNameController.text.trim(),
+                      phoneController: phoneController.text.trim(),
+                    );
                     firstNameController.clear();
                     lastNameController.clear();
                     emailController.clear();
