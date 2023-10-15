@@ -1,15 +1,20 @@
+// ignore_for_file: unused_import
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:talklytic/Screen/Auth/Screens/Responsive/desktop_view.dart';
+import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
 import 'package:talklytic/Screen/desktop_scaffold.dart';
 import 'package:talklytic/Screen/mobile_scaffold.dart';
 import 'package:talklytic/Screen/tablet_scaffold.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
+
+import 'Responsive/homepage.dart';
 import 'Screen/Auth/Screens/Responsive/mobile_view.dart';
 import 'Screen/Auth/Screens/WelcomeScreen.dart';
-import 'firebase_options.dart';
 import 'Screen/chat_screen.dart';
-import 'Responsive/homepage.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +39,7 @@ class MyApp extends StatelessWidget {
       //   tabletScaffold: TabletScaffold(),
       //   desktopScaffld: DesktopAuthScreen(),
       // ),
-      home: const MobileScaffold(),
+      home:  DesktopAuthScreen(),
     );
   }
 

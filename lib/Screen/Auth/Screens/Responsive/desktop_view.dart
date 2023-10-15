@@ -34,11 +34,15 @@ class _DesktopAuthScreenState extends State<DesktopAuthScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AvatarGlow(
-                        endRadius: 200,
+                        endRadius: 100,
                         duration: Duration(milliseconds: 2000),
                         repeatPauseDuration: Duration(milliseconds: 700),
                         // repeat: false,
-                        child: Image.asset('assets/app_icon.png'),
+                        child: Image.asset(
+                          'assets/app_icon.png',
+                          height: 200,
+                          width: 200,
+                        ),
                       ),
                       SizedBox(),
                       Text(
@@ -54,7 +58,9 @@ class _DesktopAuthScreenState extends State<DesktopAuthScreen> {
                   )),
             ),
             Expanded(
-              child: AuthenticationHomepage(LoginScreen: DesktopScaffold(),),
+              child: AuthenticationHomepage(
+                LoginScreen: DesktopScaffold(),
+              ),
             )
           ],
         ),
