@@ -1,11 +1,16 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/Screen/Auth/Screens/Responsive/desktop_view.dart';
 import 'package:talklytic/Screen/chat_screen.dart';
 
 import '../widgets/Chat_Message_List.dart';
+import 'Auth/Data/auth.dart';
+import 'Auth/Screens/WelcomeScreen.dart';
 
 class DesktopScaffold extends StatelessWidget {
   const DesktopScaffold({super.key});
@@ -47,30 +52,41 @@ class DesktopScaffold extends StatelessWidget {
                               child: Text('New group',
                                   style: TextStyle(
                                     color: ColorConstants.blackShade,
-                                      fontFamily:
-                                          GoogleFonts.manrope().fontFamily,
-                                          ))),
+                                    fontFamily:
+                                        GoogleFonts.manrope().fontFamily,
+                                  ))),
                           PopupMenuItem(
                               child: Text('Select chats',
                                   style: TextStyle(
                                     color: ColorConstants.blackShade,
-                                      fontFamily:
-                                          GoogleFonts.manrope().fontFamily,
-                                          ))),
+                                    fontFamily:
+                                        GoogleFonts.manrope().fontFamily,
+                                  ))),
                           PopupMenuItem(
                               child: Text('Settings',
                                   style: TextStyle(
                                     color: ColorConstants.blackShade,
-                                      fontFamily:
-                                          GoogleFonts.manrope().fontFamily,
-                                          ))),
+                                    fontFamily:
+                                        GoogleFonts.manrope().fontFamily,
+                                  ))),
                           PopupMenuItem(
-                              child: Text('Logout',
-                                  style: TextStyle(
-                                    color: ColorConstants.blackShade,
-                                      fontFamily:
-                                          GoogleFonts.manrope().fontFamily,
-                                          ))),
+                              child: GestureDetector(
+                            onTap: () {
+                              AuthUsr().signout();
+                              Timer(Duration(milliseconds: 700), () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DesktopAuthScreen()));
+                              });
+                            },
+                            child: Text('Logout',
+                                style: TextStyle(
+                                  color: ColorConstants.blackShade,
+                                  fontFamily: GoogleFonts.manrope().fontFamily,
+                                )),
+                          )),
                         ],
                         child: Icon(Icons.keyboard_arrow_down),
                       )

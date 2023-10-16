@@ -1,12 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talklytic/Screen/Auth/Data/auth.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/Screen/Auth/Screens/Responsive/mobile_view.dart';
+import 'package:talklytic/Screen/Auth/Screens/WelcomeScreen.dart';
+import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
 import 'package:talklytic/widgets/myDrawer.dart';
 
 import '../widgets/Chat_Message_List.dart';
+import 'Personal/profile.dart';
+import 'Personal/settings.dart';
 
 class MobileScaffold extends StatelessWidget {
   MobileScaffold({super.key});
@@ -65,31 +73,46 @@ class MobileScaffold extends StatelessWidget {
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // const MyDrawer();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorConstants.whiteShade,
-                                  width: 0.5,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  const MyDrawer();
-                                },
-                                child: Icon(
-                                  Icons.menu,
-                                  size: size.height * 0.035,
-                                  color: ColorConstants.whiteShade,
-                                ),
-                              ),
+                          PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                  child: GestureDetector(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProfileScreenPage(),
+                                          )),
+                                      child: Text('Profile'))),
+                              PopupMenuItem(
+                                  child: GestureDetector(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AppSettingPage(),
+                                          )),
+                                      child: Text('Setting'))),
+                              PopupMenuItem(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        AuthUsr().signout();
+                                        Timer(Duration(milliseconds: 700), () {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MobileAuthScreen()));
+                                        });
+                                      },
+                                      child: Text('Logout'))),
+                            ],
+                            child: Icon(
+                              Icons.account_circle,
+                              color: ColorConstants.yellowShade,
+                              size: size.width * 0.08,
                             ),
-                          ),
+                          )
                         ],
                       ),
                       RichText(

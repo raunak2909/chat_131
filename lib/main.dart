@@ -13,6 +13,7 @@ import 'package:talklytic/widgets/myDrawer.dart';
 import 'Responsive/homepage.dart';
 import 'Screen/Auth/Screens/Responsive/mobile_view.dart';
 import 'Screen/Auth/Screens/WelcomeScreen.dart';
+import 'Screen/Personal/profile.dart';
 import 'Screen/chat_screen.dart';
 import 'firebase_options.dart';
 
@@ -34,12 +35,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(
-        mobileScaffold: MobileAuthScreen(),
-        tabletScaffold: TabletScaffold(),
-        desktopScaffld: DesktopAuthScreen(),
-      ),
-      // home: DesktopScaffold(),
+      // home: const HomePage(
+      //   mobileScaffold: MobileAuthScreen(),
+      //   tabletScaffold: TabletScaffold(),
+      //   desktopScaffld: DesktopAuthScreen(),
+      // ),
+      home: ProfileScreenPage(),
     );
   }
 

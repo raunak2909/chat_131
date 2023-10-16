@@ -39,7 +39,6 @@ class _AuthenticationHomepageState extends State<AuthenticationHomepage>
           height: size.height,
           child: Stack(children: [
             Container(
-                // decoration: BoxDecoration(gradient: []),
                 ),
             SafeArea(
               child: Align(
