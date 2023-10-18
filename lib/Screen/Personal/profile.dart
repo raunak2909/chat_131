@@ -1,11 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, must_be_immutable, camel_case_types, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, must_be_immutable, camel_case_types, unnecessary_null_comparison, no_leading_underscores_for_local_identifiers, avoid_print
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:talklytic/Data/notification_handel.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/Screen/mobile_scaffold.dart';
 
 class ProfileScreenPage extends StatefulWidget {
   const ProfileScreenPage({super.key});
@@ -17,6 +19,7 @@ class ProfileScreenPage extends StatefulWidget {
 class _ProfileScreenPageState extends State<ProfileScreenPage> {
   @override
   Widget build(BuildContext context) {
+    var notificationService = NotificationServices();
     File? _img;
     String localImg =
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png';
@@ -36,6 +39,19 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
     TextEditingController currentPasswordController = TextEditingController();
     TextEditingController newPasswordController = TextEditingController();
     Size size = MediaQuery.of(context).size;
+
+    @override
+    void initState() {
+      notificationService.initlizeNotification((details) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MobileScaffold(),
+            ));
+      });
+      super.initState();
+    }
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,20 +87,22 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
                             .pickImage(source: ImageSource.gallery);
                         if (imgFromGallery != null) {
                           _img = File(imgFromGallery.path);
+                          print(_img);
                         }
                         setState(() {});
                       } catch (e) {
                         print("Error: $e");
                       }
-
-                      setState(() {});
                     },
                     child: CircleAvatar(
                       backgroundColor: ColorConstants.whiteShade,
                       radius: size.height * 0.08,
                       child: _img != null
                           ? Image(image: FileImage(_img))
-                          : Image.network(localImg,height: size.height*0.2,),
+                          : Image.network(
+                              localImg,
+                              height: size.height * 0.2,
+                            ),
                     ),
                   ),
                 ],
@@ -218,7 +236,11 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              notificationService.sendNotification(
+                                  title: 'Deleted',
+                                  body: 'Account Deleted Successfully');
+                            },
                             child: Text(
                               'Delete Account',
                               style: TextStyle(
@@ -300,14 +322,4 @@ class profileTextField extends StatelessWidget {
       ),
     );
   }
-
-  // Future getGalleryImage() async {
-  //   final imgFromGallery = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   if (imgFromGallery != null) {
-  //     _img = File(imgFromGallery.path);
-
-  //   } else {
-  //     return;
-  //   }
-  // }
 }
