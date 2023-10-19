@@ -17,10 +17,10 @@ class ProfileScreenPage extends StatefulWidget {
 }
 
 class _ProfileScreenPageState extends State<ProfileScreenPage> {
+  File? _img;
   @override
   Widget build(BuildContext context) {
     var notificationService = NotificationServices();
-    File? _img;
     String localImg =
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png';
 
@@ -52,6 +52,9 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
       super.initState();
     }
 
+   if (_img != null) {
+      print(_img);
+   }
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -87,23 +90,31 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
                             .pickImage(source: ImageSource.gallery);
                         if (imgFromGallery != null) {
                           _img = File(imgFromGallery.path);
-                          print(_img);
+                          // print(_img);
+                          setState(() {});
                         }
-                        setState(() {});
+                        
                       } catch (e) {
                         print("Error: $e");
                       }
                     },
-                    child: CircleAvatar(
-                      backgroundColor: ColorConstants.whiteShade,
-                      radius: size.height * 0.08,
-                      child: _img != null
-                          ? Image(image: FileImage(_img))
-                          : Image.network(
-                              localImg,
-                              height: size.height * 0.2,
-                            ),
-                    ),
+                    // child: CircleAvatar(
+                    //   backgroundColor: ColorConstants.whiteShade,
+                    //   radius: size.height * 0.08,
+                    //   child: _img != null
+                    //       ? Image.file(File(_img.toString()))
+                    //       : Image.network(
+                    //           localImg,
+                    //           height: size.height * 0.2,
+                    //         ),
+                    //   // child: Image.file(File(_img)),
+                    // ),
+                    child: _img != null
+                        ? Image.file(_img!)
+                        : Image.network(
+                            localImg,
+                            height: size.height * 0.2,
+                          ),
                   ),
                 ],
               ),

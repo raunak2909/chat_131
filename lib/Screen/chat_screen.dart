@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/widgets/myDrawer.dart';
 
 class ChatScreen extends StatelessWidget {
   String name;
@@ -14,6 +15,8 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(),
+      drawer: MyDrawer(),
       body: Container(
         width: size.width,
         constraints: BoxConstraints.expand(),
