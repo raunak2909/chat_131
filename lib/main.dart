@@ -35,12 +35,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(
-        mobileScaffold: MobileAuthScreen(),
-        tabletScaffold: TabletScaffold(),
-        desktopScaffld: DesktopAuthScreen(),
-      ),
-      // home: ProfileScreenPage(),
+      // home: const HomePage(
+      //   mobileScaffold: MobileAuthScreen(),
+      //   tabletScaffold: TabletScaffold(),
+      //   desktopScaffld: DesktopAuthScreen(),
+      // ),
+      home: ProfileScreenPage(),
     );
   }
 

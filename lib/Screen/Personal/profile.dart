@@ -52,9 +52,9 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
       super.initState();
     }
 
-   if (_img != null) {
+    if (_img != null) {
       print(_img);
-   }
+    }
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -93,28 +93,20 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
                           // print(_img);
                           setState(() {});
                         }
-                        
                       } catch (e) {
                         print("Error: $e");
                       }
                     },
-                    // child: CircleAvatar(
-                    //   backgroundColor: ColorConstants.whiteShade,
-                    //   radius: size.height * 0.08,
-                    //   child: _img != null
-                    //       ? Image.file(File(_img.toString()))
-                    //       : Image.network(
-                    //           localImg,
-                    //           height: size.height * 0.2,
-                    //         ),
-                    //   // child: Image.file(File(_img)),
-                    // ),
-                    child: _img != null
-                        ? Image.file(_img!)
-                        : Image.network(
-                            localImg,
-                            height: size.height * 0.2,
-                          ),
+                    child: CircleAvatar(
+                      backgroundColor: ColorConstants.whiteShade,
+                      radius: size.height * 0.08,
+                      child: _img != null
+                          ? Image.file(_img!)
+                          : Image.network(
+                              localImg,
+                              height: size.height * 0.2,
+                            ),
+                    ),
                   ),
                 ],
               ),
