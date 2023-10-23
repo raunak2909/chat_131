@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class AppSettingPage extends StatefulWidget {
@@ -10,6 +12,12 @@ class AppSettingPage extends StatefulWidget {
 class _AppSettingPageState extends State<AppSettingPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [
+          
+        ],
+      ),
+    );
   }
 }
