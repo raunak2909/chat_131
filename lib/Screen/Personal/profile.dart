@@ -94,7 +94,7 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
                           setState(() {});
                         }
                       } catch (e) {
-                        print("Error: $e");
+                        print("Error:- $e");
                       }
                     },
                     child: CircleAvatar(
