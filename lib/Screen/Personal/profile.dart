@@ -18,11 +18,12 @@ class ProfileScreenPage extends StatefulWidget {
 
 class _ProfileScreenPageState extends State<ProfileScreenPage> {
   File? _img;
+  String localImg =
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png';
   @override
   Widget build(BuildContext context) {
     var notificationService = NotificationServices();
-    String localImg =
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png';
+    
 
     TextEditingController userNameController = TextEditingController();
     TextEditingController aboutController = TextEditingController();
@@ -162,7 +163,7 @@ class _ProfileScreenPageState extends State<ProfileScreenPage> {
                         children: [
                           dobInputField(
                             controller: firstDateController,
-                            mfocus: true,
+                            mfocus: false,
                           ),
                           SizedBox(width: size.width * 0.01),
                           dobInputField(

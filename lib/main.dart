@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       //   tabletScaffold: TabletScaffold(),
       //   desktopScaffld: DesktopAuthScreen(),
       // ),
-      home: ProfileScreenPage(),
+      home:const ProfileScreenPage(),
     );
   }
 

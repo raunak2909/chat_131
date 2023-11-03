@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
-import 'package:talklytic/widgets/myDrawer.dart';
 
 class ChatScreen extends StatelessWidget {
   String name;
@@ -15,8 +14,6 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
-      drawer: MyDrawer(),
       body: Container(
         width: size.width,
         constraints: BoxConstraints.expand(),
@@ -209,7 +206,8 @@ class ChatScreen extends StatelessWidget {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
+                                              horizontal: 8.0,
+                                            ),
                                             child: Icon(
                                               FontAwesomeIcons.faceSmile,
                                               color: Colors.grey.shade700,
@@ -259,7 +257,7 @@ class ChatScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: ' Say Something...',
+                                                  hintText: '   Say Something...',
                                                   hintStyle: TextStyle(
                                                     fontFamily:
                                                         GoogleFonts.manrope()
@@ -286,7 +284,7 @@ class ChatScreen extends StatelessWidget {
                                     child: Icon(
                                       Icons.send,
                                       color: ColorConstants.whiteShade,
-                                      size: fontSize,
+                                      size: fontSize/1.2,
                                     ),
                                   ),
                                   SizedBox(width: fontSize),

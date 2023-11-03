@@ -9,8 +9,9 @@ import 'package:talklytic/Screen/Auth/Screens/Responsive/desktop_view.dart';
 import 'package:talklytic/Screen/chat_screen.dart';
 
 import '../widgets/Chat_Message_List.dart';
+import '../widgets/gif_page.dart';
 import 'Auth/Data/auth.dart';
-import 'Auth/Screens/WelcomeScreen.dart';
+import 'Personal/profile.dart';
 
 class DesktopScaffold extends StatelessWidget {
   const DesktopScaffold({super.key});
@@ -31,7 +32,13 @@ class DesktopScaffold extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Icon(Icons.account_circle),
+                        child: InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProfileScreenPage(),
+                                )),
+                            child: Icon(Icons.account_circle)),
                       ),
                       SizedBox(
                         width: size.width * 0.01,
@@ -45,7 +52,6 @@ class DesktopScaffold extends StatelessWidget {
                         width: size.width * 0.01,
                       ),
                       PopupMenuButton(
-                        // position:,
                         color: ColorConstants.yellowShade,
                         itemBuilder: (context) => [
                           PopupMenuItem(
@@ -109,12 +115,7 @@ class DesktopScaffold extends StatelessWidget {
               )),
           Expanded(
             flex: 1,
-            child: Container(
-              color: Colors.yellow.shade200,
-              child: Column(
-                children: [],
-              ),
-            ),
+            child: GifPage(),
           )
         ],
       ),
