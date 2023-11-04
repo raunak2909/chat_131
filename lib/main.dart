@@ -8,7 +8,6 @@ import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
 import 'package:talklytic/Screen/desktop_scaffold.dart';
 import 'package:talklytic/Screen/mobile_scaffold.dart';
 import 'package:talklytic/Screen/tablet_scaffold.dart';
-import 'package:talklytic/widgets/myDrawer.dart';
 
 import 'Responsive/homepage.dart';
 import 'Screen/Auth/Screens/Responsive/mobile_view.dart';
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
       //   tabletScaffold: TabletScaffold(),
       //   desktopScaffld: DesktopAuthScreen(),
       // ),
-      home:const ProfileScreenPage(),
+      home:const DesktopScaffold(),
     );
   }
 

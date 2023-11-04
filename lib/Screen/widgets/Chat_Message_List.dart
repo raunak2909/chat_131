@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Constants/dummy_data.dart';
 
-import '../Screen/Auth/Data/color_constants.dart';
-import '../Screen/chat_screen.dart';
+import '../Auth/Data/color_constants.dart';
+import '../chat_screen.dart';
 
 class ChatMessageList extends StatelessWidget {
   const ChatMessageList({

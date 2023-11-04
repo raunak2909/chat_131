@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../widgets/Chat_Message_List.dart';
+import 'widgets/Chat_Message_List.dart';
 import 'chat_screen.dart';
 
 class TabletScaffold extends StatelessWidget {

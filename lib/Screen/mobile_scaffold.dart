@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'dart:async';
 
@@ -8,11 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/auth.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/Responsive/mobile_view.dart';
-import 'package:talklytic/Screen/Auth/Screens/WelcomeScreen.dart';
-import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
-import 'package:talklytic/widgets/myDrawer.dart';
 
-import '../widgets/Chat_Message_List.dart';
+import 'widgets/Chat_Message_List.dart';
 import 'Personal/profile.dart';
 import 'Personal/settings.dart';
 
