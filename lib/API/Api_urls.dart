@@ -2,7 +2,8 @@
 
 class Gif_api_url
 {
-  static const BASE_URL = 'https://api.giphy.com/v1/gifs/';
-  static const trending_url = '${BASE_URL}trending';
-  static const search_url = '${BASE_URL}search';
+  //https://api.giphy.com/v1/gifs/trending?api_key=URFPHUZtC8hVYOH2N3nAQtDcJ0xCMR0U
+  static const BASE_URL = 'api.giphy.com/v1/gifs/';
+  static const trending_url = '${BASE_URL}trending?api_key=URFPHUZtC8hVYOH2N3nAQtDcJ0xCMR0U';
+  static const search_url = '${BASE_URL}search?api_key=URFPHUZtC8hVYOH2N3nAQtDcJ0xCMR0U';
 }

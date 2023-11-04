@@ -16,6 +16,7 @@ class TrendingGifBloc extends Bloc<TrendingGifEvent, TrendingGifState> {
       emit(TrendingGifLoadingState());
       try {
         var res = await apiHelper.getApiData(url: Gif_api_url.trending_url);
+        print('object$res');
         emit(
             TrendingGifLoadedState(mainDataModal: MainDataModal.fromJson(res)));
       } catch (e) {

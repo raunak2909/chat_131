@@ -2,6 +2,9 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talklytic/API/Api_helper.dart';
+import 'package:talklytic/Bloc/Trending_gif/trending_gif_bloc.dart';
 
 import 'package:talklytic/Screen/Auth/Screens/Responsive/desktop_view.dart';
 import 'package:talklytic/Screen/Auth/Screens/login_page.dart';
@@ -21,7 +24,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(BlocProvider(
+    create: (context) => TrendingGifBloc(apiHelper: ApiHelper()),
+    child:const MyApp(),
+  ));
+  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,7 +46,7 @@ class MyApp extends StatelessWidget {
       //   tabletScaffold: TabletScaffold(),
       //   desktopScaffld: DesktopAuthScreen(),
       // ),
-      home:const DesktopScaffold(),
+      home:  DesktopScaffold(),
     );
   }
 
