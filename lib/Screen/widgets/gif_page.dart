@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talklytic/API/Api_helper.dart';
 import 'package:talklytic/Bloc/Trending_gif/trending_gif_bloc.dart';
+import 'package:talklytic/Data/GIPHY/Trending_Modal/GifData_Modal.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 
 class GifPage extends StatefulWidget {
@@ -14,6 +16,13 @@ class GifPage extends StatefulWidget {
 }
 
 class _GifPageState extends State<GifPage> {
+  @override
+  void initState() {
+    // ApiHelper().getApiData(url: Gif_api_url.trending_url);
+    context.read<TrendingGifBloc>().add(GetTrendingGif());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -45,7 +54,8 @@ class _GifPageState extends State<GifPage> {
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.grey.shade200),
             child: TextField(
-              textAlign: TextAlign.start,
+              cursorHeight: size.height * 0.02,
+              textAlign: TextAlign.center,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: '   Search',
@@ -71,24 +81,28 @@ class _GifPageState extends State<GifPage> {
                     child: Text(state.errorMsg),
                   );
                 } else if (state is TrendingGifLoadedState) {
-                  var mainModal = state.mainDataModal;
+                  var mainModal = state.mainDataModal.data;
+
                   return GridView.builder(
-                    itemCount: mainModal.data.length,
+                    itemCount: mainModal.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 4),
                     itemBuilder: (context, index) {
                       return Container(
-                        color: Colors.amber.shade300,
+                        margin: EdgeInsets.all(5),
+                        // color: Colors.amber.shade300,
                         height: size.height * 0.005,
                         width: size.width * 0.07,
+                        child: Image.network(state
+                            .mainDataModal.data[index].images.original.webp),
                         // child: ,
                       );
                     },
                   );
                 }
-                
+
                 return Center(
-                  child: Text('Data found.....!'),
+                  child: Text('No Data found.....!'),
                 );
               },
             ),

@@ -58,7 +58,7 @@ class Image {
           Fixed_height_small_still.fromJson(json['fixed_height_small_still']),
       fixed_width_small: Fixed_width_small.fromJson(json['fixed_width_small']),
       fixed_width_still: Fixed_width_still.fromJson(json['fixed_width_still']),
-      four_k: Four_k.fromJson(json['four_k']),
+      four_k: Four_k.fromJson(json['4k']),
       hd: Hd.fromJson(json['hd']),
       looping: Looping.fromJson(json['looping']),
       original: Original.fromJson(json['original']),
@@ -67,7 +67,7 @@ class Image {
       preview: Preview.fromJson(json['preview']),
       preview_gif: Preview_gif.fromJson(json['preview_gif']),
       preview_webp: Preview_webp.fromJson(json['preview_webp']),
-      w_still: W_still.fromJson(json['w_still']),
+      w_still: W_still.fromJson(json['480w_still']),
     );
   }
 }

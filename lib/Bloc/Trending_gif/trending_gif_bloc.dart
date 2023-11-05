@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:talklytic/API/Api_helper.dart';
@@ -16,7 +18,8 @@ class TrendingGifBloc extends Bloc<TrendingGifEvent, TrendingGifState> {
       emit(TrendingGifLoadingState());
       try {
         var res = await apiHelper.getApiData(url: Gif_api_url.trending_url);
-        print('object$res');
+        // print('object ${Gif_api_url.trending_url}');
+        // print('Response: $res');
         emit(
             TrendingGifLoadedState(mainDataModal: MainDataModal.fromJson(res)));
       } catch (e) {
