@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:talklytic/API/Api_helper.dart';
 import 'package:talklytic/Bloc/Trending_gif/trending_gif_bloc.dart';
-import 'package:talklytic/Data/GIPHY/Trending_Modal/GifData_Modal.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 
 class GifPage extends StatefulWidget {
@@ -18,7 +16,6 @@ class GifPage extends StatefulWidget {
 class _GifPageState extends State<GifPage> {
   @override
   void initState() {
-    // ApiHelper().getApiData(url: Gif_api_url.trending_url);
     context.read<TrendingGifBloc>().add(GetTrendingGif());
     super.initState();
   }
@@ -64,6 +61,7 @@ class _GifPageState extends State<GifPage> {
                   )),
             ),
           ),
+          Divider(),
           SizedBox(height: size.height * 0.015),
           Expanded(
             child: BlocBuilder<TrendingGifBloc, TrendingGifState>(
@@ -100,7 +98,6 @@ class _GifPageState extends State<GifPage> {
                     },
                   );
                 }
-
                 return Center(
                   child: Text('No Data found.....!'),
                 );

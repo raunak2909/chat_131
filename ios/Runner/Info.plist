@@ -53,6 +53,8 @@
 		<string>Access to your Camera</string>
 	<key>NSMicrophoneUsageDescription</key>
 		<string>Access to your Microphone</string>
+	<key>GADApplicationIdentifier</key>
+<string>ca-app-pub-6632619511093748~8543233257</string>
 
 </dict>
 </plist>
