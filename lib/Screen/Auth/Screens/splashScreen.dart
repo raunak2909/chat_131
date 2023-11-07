@@ -1,12 +1,15 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, avoid_print
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/Responsive/mobile_view.dart';
+import 'package:talklytic/Screen/mobile_scaffold.dart';
 
 class SplashScreenPage extends StatefulWidget {
+  static const String KEYLOGIN = 'login';
   const SplashScreenPage({super.key});
 
   @override
@@ -24,8 +27,35 @@ class _SplashScreenPageState extends State<SplashScreenPage>
   void initState() {
     _controller = AnimationController(vsync: this);
     _startTypingAnimation();
-     homepageRoute();
+    checkAuth();
     super.initState();
+  }
+
+  Future<void> checkAuth() async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      bool? loginStatus = pref.getBool(SplashScreenPage.KEYLOGIN) ?? false;
+      print(loginStatus);
+      if (loginStatus) {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MobileScaffold(),
+              ));
+        });
+      } else {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MobileAuthScreen(),
+              ));
+        });
+      }
+    } catch (e) {
+      print("Error initializing SharedPreferences: $e");
+    }
   }
 
   void _startTypingAnimation() {
@@ -37,18 +67,6 @@ class _SplashScreenPageState extends State<SplashScreenPage>
         });
         _startTypingAnimation();
       }
-     
-    });
-    
-  }
-
-  void homepageRoute() {
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MobileAuthScreen(),
-          ));
     });
   }
 

@@ -1,13 +1,14 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print, must_be_immutable, non_constant_identifier_names
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print, must_be_immutable, non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:talklytic/Screen/Auth/Data/auth.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/Screen/Auth/Screens/splashScreen.dart';
 import 'package:talklytic/Screen/Auth/Screens/widgets/Text_fields.dart';
 
-import 'login_phone.dart';
 
 class LoginPageScreen extends StatefulWidget {
   Widget LoginScreen;
@@ -34,7 +35,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
       key: _formKey,
       child: Column(
         children: [
-          SizedBox(height: size.height * 0.02),
+          SizedBox(height: size.height * 0.05),
           SizedBox(
             width: size.width * 0.9,
             child: MyTextFieldWidget(
@@ -54,7 +55,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
               ),
             ),
           ),
-          SizedBox(height: size.height * 0.02),
+          SizedBox(height: size.height * 0.04),
           SizedBox(
             width: size.width * 0.9,
             child: MyTextFieldWidget(
@@ -96,46 +97,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
               children: [Text('Forgot Password!')],
             ),
           ),
-          Text(
-            'or',
-            style: TextStyle(
-              fontFamily: GoogleFonts.manrope().fontFamily,
-              fontSize: 22,
-              color: ColorConstants.blackShade,
-            ),
-          ),
-          SizedBox(
-            width: size.width,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstants.purpleShade,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.elliptical(6, 12)),
-                ),
-              ),
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return login_with_phone(
-                      size: size,
-                      phoneController: phoneController,
-                      obscureText: obscureText,
-                    );
-                  },
-                );
-              },
-              child: Text(
-                'Phone',
-                style: TextStyle(
-                  fontFamily: GoogleFonts.manrope().fontFamily,
-                  color: ColorConstants.whiteShade,
-                  fontSize: 22,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.01),
+          SizedBox(height: size.height * 0.05),
           SizedBox(
             width: size.width / 2,
             child: ElevatedButton(
@@ -145,12 +107,10 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
               ),
-              onPressed: () async{
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-
-                  // var pref = await 
-
-
+                  var pref = await SharedPreferences.getInstance();
+                  pref.setBool(SplashScreenPage.KEYLOGIN, true);
 
                   AuthUsr().signinWithEmailandPassword(
                     email: emailController.text.trim(),
@@ -168,23 +128,6 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                   fontSize: 22,
                 ),
               ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.01),
-          Text(
-            "Don't have an account?",
-            style: TextStyle(
-              fontFamily: GoogleFonts.manrope().fontFamily,
-              color: ColorConstants.blackShade,
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            "signup",
-            style: TextStyle(
-              fontFamily: GoogleFonts.manrope().fontFamily,
-              color: ColorConstants.purpleShade,
-              fontSize: 15,
             ),
           ),
         ],

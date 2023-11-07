@@ -5,9 +5,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talklytic/Screen/Auth/Data/auth.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/Responsive/mobile_view.dart';
+import 'package:talklytic/Screen/Auth/Screens/splashScreen.dart';
 
 import 'widgets/Chat_Message_List.dart';
 import 'Personal/profile.dart';
@@ -92,7 +94,12 @@ class MobileScaffold extends StatelessWidget {
                                       child: Text('Setting'))),
                               PopupMenuItem(
                                   child: GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
+                                        SharedPreferences pref =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        pref.setBool(
+                                            SplashScreenPage.KEYLOGIN, false);
                                         AuthUsr().signout();
                                         Timer(Duration(milliseconds: 700), () {
                                           Navigator.pushReplacement(
