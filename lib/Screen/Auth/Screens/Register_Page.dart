@@ -86,7 +86,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Colors.grey.shade400,
               ),
             ),
           ),
@@ -106,7 +106,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
               keyboardType: TextInputType.text,
               prefixIcon: Icon(
                 Icons.phone,
-                color: Colors.white,
+                color: Colors.grey.shade400,
               ),
             ),
           ),
@@ -131,7 +131,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
                       keyboardType: TextInputType.text,
                       prefixIcon: Icon(
                         Icons.lock_rounded,
-                        color: Colors.white,
+                        color: Colors.grey.shade400,
                       ),
                     ),
                   ),
@@ -162,7 +162,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
             width: size.width / 2,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstants.yellowShade,
+                backgroundColor: ColorConstants.purpleShade,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
@@ -192,7 +192,7 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
                 'Register'.toUpperCase(),
                 style: TextStyle(
                   fontFamily: GoogleFonts.manrope().fontFamily,
-                  color: ColorConstants.blackShade,
+                  color: ColorConstants.whiteShade,
                   fontSize: 22,
                 ),
               ),

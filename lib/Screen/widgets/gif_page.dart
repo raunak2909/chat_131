@@ -16,7 +16,7 @@ class GifPage extends StatefulWidget {
 class _GifPageState extends State<GifPage> {
   @override
   void initState() {
-    context.read<TrendingGifBloc>().add(GetTrendingGif());
+    // context.read<TrendingGifBloc>().add(GetTrendingGif());
     super.initState();
   }
 

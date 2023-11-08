@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +26,12 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+
+  if (kIsWeb) {
+  } else {
+    // MobileAds.instance.initialize();
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -51,7 +58,7 @@ class MyApp extends StatelessWidget {
         tabletScaffold: TabletScaffold(),
         desktopScaffld: DesktopAuthScreen(),
       ),
-      // home: MobileScaffold(),
+      // home:const XPage(),
     );
   }
 

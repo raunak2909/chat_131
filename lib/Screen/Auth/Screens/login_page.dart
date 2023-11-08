@@ -9,7 +9,6 @@ import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 import 'package:talklytic/Screen/Auth/Screens/splashScreen.dart';
 import 'package:talklytic/Screen/Auth/Screens/widgets/Text_fields.dart';
 
-
 class LoginPageScreen extends StatefulWidget {
   Widget LoginScreen;
   LoginPageScreen({
@@ -51,7 +50,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Colors.black38,
               ),
             ),
           ),
@@ -71,7 +70,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
               keyboardType: TextInputType.text,
               prefixIcon: Icon(
                 Icons.lock_rounded,
-                color: Colors.white,
+                color: Colors.black38,
               ),
               suffixIcon: InkWell(
                 onTap: () {
@@ -102,7 +101,7 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
             width: size.width / 2,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstants.yellowShade,
+                backgroundColor: ColorConstants.purpleShade,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
@@ -124,8 +123,8 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                 'Login'.toUpperCase(),
                 style: TextStyle(
                   fontFamily: GoogleFonts.manrope().fontFamily,
-                  color: ColorConstants.blackShade,
-                  fontSize: 22,
+                  color: ColorConstants.whiteShade,
+                  fontSize: 28,
                 ),
               ),
             ),
