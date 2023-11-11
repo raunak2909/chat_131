@@ -5,11 +5,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   String name;
   double fontSize;
   ChatScreen({super.key, required this.name, this.fontSize = 22});
 
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  TextEditingController sendMsgController = TextEditingController();
+  bool hasContent = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -41,10 +48,10 @@ class ChatScreen extends StatelessWidget {
                             ),
                             SizedBox(width: size.width * 0.3),
                             Text(
-                              name,
+                              widget.name,
                               style: TextStyle(
                                 fontFamily: GoogleFonts.manrope().fontFamily,
-                                fontSize: fontSize,
+                                fontSize: widget.fontSize,
                                 fontWeight: FontWeight.bold,
                                 color: ColorConstants.whiteShade,
                               ),
@@ -56,17 +63,17 @@ class ChatScreen extends StatelessWidget {
                                 Icon(
                                   FontAwesomeIcons.video,
                                   color: ColorConstants.whiteShade,
-                                  size: fontSize / 1.3,
+                                  size: widget.fontSize / 1.3,
                                 ),
-                                SizedBox(width: fontSize / 2),
+                                SizedBox(width: widget.fontSize / 2),
                                 Icon(
                                   FontAwesomeIcons.phone,
                                   color: ColorConstants.whiteShade,
-                                  size: fontSize / 1.3,
+                                  size: widget.fontSize / 1.3,
                                 ),
                                 Container(
                                   margin: EdgeInsets.symmetric(
-                                      horizontal: fontSize / 5),
+                                      horizontal: widget.fontSize / 5),
                                   color: Color.fromARGB(84, 238, 238, 238),
                                   child: VerticalDivider(
                                     indent: 10,
@@ -79,7 +86,7 @@ class ChatScreen extends StatelessWidget {
                                 Icon(
                                   Icons.search,
                                   color: ColorConstants.whiteShade,
-                                  size: fontSize / 0.9,
+                                  size: widget.fontSize / 0.9,
                                 ),
                               ],
                             )
@@ -90,10 +97,10 @@ class ChatScreen extends StatelessWidget {
                           children: [
                             SizedBox(width: size.width * 0.05),
                             Text(
-                              name,
+                              widget.name,
                               style: TextStyle(
                                 fontFamily: GoogleFonts.manrope().fontFamily,
-                                fontSize: fontSize,
+                                fontSize: widget.fontSize,
                                 fontWeight: FontWeight.bold,
                                 color: ColorConstants.whiteShade,
                               ),
@@ -105,17 +112,17 @@ class ChatScreen extends StatelessWidget {
                                 Icon(
                                   FontAwesomeIcons.video,
                                   color: ColorConstants.whiteShade,
-                                  size: fontSize / 1.3,
+                                  size: widget.fontSize / 1.3,
                                 ),
-                                SizedBox(width: fontSize / 2),
+                                SizedBox(width: widget.fontSize / 2),
                                 Icon(
                                   FontAwesomeIcons.phone,
                                   color: ColorConstants.whiteShade,
-                                  size: fontSize / 1.3,
+                                  size: widget.fontSize / 1.3,
                                 ),
                                 Container(
                                   margin: EdgeInsets.symmetric(
-                                      horizontal: fontSize / 5),
+                                      horizontal: widget.fontSize / 5),
                                   color: Color.fromARGB(84, 238, 238, 238),
                                   child: VerticalDivider(
                                     indent: 10,
@@ -128,9 +135,9 @@ class ChatScreen extends StatelessWidget {
                                 Icon(
                                   Icons.search,
                                   color: ColorConstants.whiteShade,
-                                  size: fontSize / 0.9,
+                                  size: widget.fontSize / 0.9,
                                 ),
-                                SizedBox(width: fontSize / 6),
+                                SizedBox(width: widget.fontSize / 6),
                                 PopupMenuButton(
                                   color: Colors.purple.shade300,
                                   itemBuilder: (context) => [
@@ -145,14 +152,14 @@ class ChatScreen extends StatelessWidget {
                                   child: Icon(
                                     Icons.more_horiz,
                                     color: ColorConstants.whiteShade,
-                                    size: fontSize / 0.9,
+                                    size: widget.fontSize / 0.9,
                                   ),
                                 )
                               ],
                             ),
                           ],
                         )),
-              SizedBox(height: fontSize),
+              SizedBox(height: widget.fontSize),
               Expanded(
                 child: Container(
                   // constraints: BoxConstraints.expand(),
@@ -178,7 +185,7 @@ class ChatScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Icon(
                                       Icons.add,
-                                      size: fontSize,
+                                      size: widget.fontSize,
                                       color: ColorConstants.blackShade,
                                     ),
                                   ),
@@ -193,6 +200,12 @@ class ChatScreen extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: TextField(
+                                              // controller: sendMsgController,
+                                              onChanged: (text) {
+                                                setState(() {
+                                                  hasContent = text.isNotEmpty;
+                                                });
+                                              },
                                               textAlign: TextAlign.center,
                                               decoration: InputDecoration(
                                                   border: InputBorder.none,
@@ -211,22 +224,33 @@ class ChatScreen extends StatelessWidget {
                                             child: Icon(
                                               FontAwesomeIcons.faceSmile,
                                               color: Colors.grey.shade700,
-                                              size: fontSize,
+                                              size: widget.fontSize,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: fontSize),
-                                  CircleAvatar(
-                                    backgroundColor: ColorConstants.purpleShade,
-                                    child: Icon(
-                                      Icons.mic,
-                                      color: ColorConstants.whiteShade,
-                                      size: fontSize,
-                                    ),
-                                  ),
+                                  SizedBox(width: widget.fontSize),
+                                  hasContent
+                                      ? CircleAvatar(
+                                          backgroundColor:
+                                              ColorConstants.purpleShade,
+                                          child: Icon(
+                                            Icons.send,
+                                            color: ColorConstants.whiteShade,
+                                            size: widget.fontSize,
+                                          ),
+                                        )
+                                      : CircleAvatar(
+                                          backgroundColor:
+                                              ColorConstants.purpleShade,
+                                          child: Icon(
+                                            Icons.mic,
+                                            color: ColorConstants.whiteShade,
+                                            size: widget.fontSize / 1.2,
+                                          ),
+                                        ),
                                 ],
                               ),
                             )
@@ -239,7 +263,7 @@ class ChatScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Icon(
                                       Icons.add,
-                                      size: fontSize,
+                                      size: widget.fontSize,
                                       color: ColorConstants.blackShade,
                                     ),
                                   ),
@@ -254,15 +278,17 @@ class ChatScreen extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: TextField(
+                                              // controller: sendMsgController,
                                               textAlign: TextAlign.start,
                                               decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: '   Say Something...',
-                                                  hintStyle: TextStyle(
-                                                    fontFamily:
-                                                        GoogleFonts.manrope()
-                                                            .fontFamily,
-                                                  )),
+                                                border: InputBorder.none,
+                                                hintText: '   Say Something...',
+                                                hintStyle: TextStyle(
+                                                  fontFamily:
+                                                      GoogleFonts.manrope()
+                                                          .fontFamily,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           Padding(
@@ -271,35 +297,35 @@ class ChatScreen extends StatelessWidget {
                                             child: Icon(
                                               FontAwesomeIcons.faceSmile,
                                               color: Colors.grey.shade700,
-                                              size: fontSize,
+                                              size: widget.fontSize,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: fontSize),
+                                  SizedBox(width: widget.fontSize),
                                   CircleAvatar(
                                     backgroundColor: ColorConstants.purpleShade,
                                     child: Icon(
                                       Icons.send,
                                       color: ColorConstants.whiteShade,
-                                      size: fontSize/1.2,
+                                      size: widget.fontSize / 1.2,
                                     ),
                                   ),
-                                  SizedBox(width: fontSize),
+                                  SizedBox(width: widget.fontSize),
                                   CircleAvatar(
                                     backgroundColor: ColorConstants.purpleShade,
                                     child: Icon(
                                       Icons.mic,
                                       color: ColorConstants.whiteShade,
-                                      size: fontSize,
+                                      size: widget.fontSize,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                      SizedBox(height: fontSize),
+                      SizedBox(height: widget.fontSize),
                     ],
                   ),
                 ),
