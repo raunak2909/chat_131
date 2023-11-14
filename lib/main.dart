@@ -22,6 +22,7 @@ import 'Screen/Auth/Screens/WelcomeScreen.dart';
 import 'Screen/Personal/profile.dart';
 import 'Screen/Personal/settings.dart';
 import 'Screen/chat_screen.dart';
+import 'Screen/widgets/mapWidget.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -53,12 +54,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(
-        mobileScaffold: SplashScreenPage(),
-        tabletScaffold: TabletScaffold(),
-        desktopScaffld: DesktopAuthScreen(),
-      ),
-      // home:const XPage(),
+      // home: const HomePage(
+      //   mobileScaffold: SplashScreenPage(),
+      //   tabletScaffold: TabletScaffold(),
+      //   desktopScaffld: DesktopAuthScreen(),
+      // ),
+      home:const MapPage(),
     );
   }
 

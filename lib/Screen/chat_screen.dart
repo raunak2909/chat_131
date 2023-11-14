@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
@@ -181,13 +182,19 @@ class _ChatScreenState extends State<ChatScreen> {
                                   horizontal: 8.0, vertical: 20.0),
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: widget.fontSize,
-                                      color: ColorConstants.blackShade,
-                                    ),
+                                  SpeedDial(
+                                    elevation: 0,
+                                    backgroundColor: Colors.transparent,
+                                    activeBackgroundColor: Colors.transparent,
+                                    useRotationAnimation: true,
+                                    activeForegroundColor: Colors.transparent,
+                                    spacing: 2,
+                                    activeIcon: Icons.add,
+                                    children: [
+                                      SpeedDialChild(
+                                          child: Icon(Icons.location_on)),
+                                    ],
+                                    child: Icon(Icons.add),
                                   ),
                                   Expanded(
                                     child: Container(
@@ -259,13 +266,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                   horizontal: 8.0, vertical: 20.0),
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: widget.fontSize,
-                                      color: ColorConstants.blackShade,
-                                    ),
+                                  SpeedDial(
+                                    activeIcon: Icons.diversity_1_rounded,
+                                    children: [
+                                      SpeedDialChild(
+                                          child: Icon(Icons.location_on)),
+                                    ],
                                   ),
                                   Expanded(
                                     child: Container(
