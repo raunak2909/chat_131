@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_function_literals_in_foreach_calls, avoid_print
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:talklytic/Data/Maps/key.dart';
 
@@ -16,30 +19,44 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   static const LatLng sourceLocation = LatLng(29.149187, 75.721657);
-  static const LatLng targetLocation = LatLng(29.073762, 75.852625);
+  static const LatLng targetLocation = LatLng(28.459497, 77.026634);
+  Timer? timer;
+  int selectedMins = 0;
+  bool isTimerVisible = false;
 
   List<LatLng> polylineCoordinates = [];
   List<String> sendLocationTiming = ['45 min', '1 hour', '5 hour', '8 hour'];
 
-  void getPolyPoints() async {
-    try {
-      PolylinePoints polylinePoints = PolylinePoints();
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        MapApiKey.MapKey,
-        PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-        PointLatLng(targetLocation.latitude, targetLocation.longitude),
-      );
+  GoogleMapPolyline googleMapPolyline =
+      new GoogleMapPolyline(apiKey: MapApiKey.MapKey);
 
-      if (result.points.isNotEmpty) {
-        result.points.forEach((PointLatLng point) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        });
-      }
-      setState(() {});
-    } catch (e) {
-      print("Error getting route: $e");
-    }
+  void getPolyPoints() async {
+    await googleMapPolyline.getCoordinatesWithLocation(
+      origin: sourceLocation,
+      destination: targetLocation,
+      mode: RouteMode.walking,
+    );
   }
+
+  // void getPolyPoints() async {
+  //   try {
+  //     PolylinePoints polylinePoints = PolylinePoints();
+  //     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //       MapApiKey.MapKey,
+  //       PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+  //       PointLatLng(targetLocation.latitude, targetLocation.longitude),
+  //     );
+
+  //     if (result.points.isNotEmpty) {
+  //       result.points.forEach((PointLatLng point) {
+  //         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  //       });
+  //     }
+  //     setState(() {});
+  //   } catch (e) {
+  //     print("Error getting route: $e");
+  //   }
+  // }
 
   @override
   void initState() {
@@ -77,12 +94,16 @@ class _MapPageState extends State<MapPage> {
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
                   target: sourceLocation,
-                  zoom: 10.5,
+                  zoom: 8,
                 ),
+                onMapCreated: (controller) {
+                  getPolyPoints();
+                },
                 polylines: {
                   Polyline(
-                      polylineId: PolylineId('route'),
-                      points: polylineCoordinates),
+                    polylineId: PolylineId('route'),
+                    points: polylineCoordinates,
+                  ),
                 },
                 markers: {
                   Marker(
@@ -98,40 +119,110 @@ class _MapPageState extends State<MapPage> {
             ),
             SizedBox(height: 50),
             CupertinoButton.filled(
-                child: Text('Share Location'),
-                onPressed: () {
-                  showCupertinoModalPopup(
-                    context: context,
-                    builder: (context) {
-                      return SizedBox(
-                        height: 150,
-                        width: double.infinity,
-                        child: CupertinoPicker(
-                          backgroundColor: Colors.white,
-                          itemExtent: 30,
-                          scrollController: FixedExtentScrollController(
-                            initialItem: 0,
-                          ),
-                          children: [
-                            Text(sendLocationTiming[0]),
-                            Text(sendLocationTiming[1]),
-                            Text(sendLocationTiming[2]),
-                            Text(sendLocationTiming[3]),
-                          ],
-                          onSelectedItemChanged: (value) {},
+              child: Text('Share Location'),
+              onPressed: () {
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return SizedBox(
+                      height: 150,
+                      width: double.infinity,
+                      child: CupertinoPicker(
+                        backgroundColor: Colors.white,
+                        itemExtent: 30,
+                        scrollController: FixedExtentScrollController(
+                          initialItem: 0,
                         ),
-                      );
-                    },
-                  );
-                }),
+                        children: [
+                          Text(sendLocationTiming[0]),
+                          Text(sendLocationTiming[1]),
+                          Text(sendLocationTiming[2]),
+                          Text(sendLocationTiming[3]),
+                        ],
+                        onSelectedItemChanged: (value) {
+                          setState(() {
+                            switch (value) {
+                              case 0:
+                                selectedMins = 45;
+                                break;
+                              case 1:
+                                selectedMins = 60;
+                                break;
+                              case 2:
+                                selectedMins = 300;
+                                break;
+                              case 3:
+                                selectedMins = 480;
+                                break;
+                              default:
+                            }
+                          });
+                          _startCountdown();
+                          Timer(Duration(seconds: 3), () {
+                            isTimerVisible = true;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
             SizedBox(height: 40),
             CupertinoButton.filled(
               child: Text('People'),
               onPressed: () {},
+            ),
+            SizedBox(height: 30),
+            AnimatedOpacity(
+              opacity: isTimerVisible ? 1 : 0,
+              duration: Duration(seconds: 2),
+              child: Container(
+                alignment: Alignment.center,
+                height: 100,
+                width: 250,
+                decoration: BoxDecoration(
+                  color: Colors.purple.shade400,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  _formatTime(selectedMins),
+                  style: TextStyle(
+                    fontFamily: GoogleFonts.manrope().fontFamily,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 48,
+                    color: Colors.white,
+                    letterSpacing: 5,
+                  ),
+                ),
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  void _startCountdown() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (selectedMins > 0) {
+          selectedMins--;
+        } else {
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  String _formatTime(int totalSeconds) {
+    int minutes = totalSeconds ~/ 60;
+    int seconds = totalSeconds % 60;
+
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
 }
