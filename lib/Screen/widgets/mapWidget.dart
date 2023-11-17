@@ -158,7 +158,7 @@ class _MapPageState extends State<MapPage> {
                             }
                           });
                           _startCountdown();
-                          Timer(Duration(seconds: 3), () {
+                          Timer(Duration(seconds: 1), () {
                             isTimerVisible = true;
                           });
                         },
@@ -176,7 +176,7 @@ class _MapPageState extends State<MapPage> {
             SizedBox(height: 30),
             AnimatedOpacity(
               opacity: isTimerVisible ? 1 : 0,
-              duration: Duration(seconds: 2),
+              duration: Duration(milliseconds: 100),
               child: Container(
                 alignment: Alignment.center,
                 height: 100,
@@ -186,7 +186,7 @@ class _MapPageState extends State<MapPage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  _formatTime(selectedMins),
+                  _formatTime(selectedMins *60),
                   style: TextStyle(
                     fontFamily: GoogleFonts.manrope().fontFamily,
                     fontWeight: FontWeight.bold,
@@ -221,8 +221,29 @@ class _MapPageState extends State<MapPage> {
 
   String _formatTime(int totalSeconds) {
     int minutes = totalSeconds ~/ 60;
-    int seconds = totalSeconds % 60;
+    int seconds = totalSeconds % 1000;
 
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
 }
+
+
+
+// TweenAnimationBuilder<Duration>(
+//   duration: Duration(minutes: 3),
+//   tween: Tween(begin: Duration(minutes: 3), end: Duration.zero),
+//   onEnd: () {
+//     print('Timer ended');
+//   },
+//   builder: (BuildContext context, Duration value, Widget? child) {
+//     final minutes = value.inMinutes;
+//     final seconds = value.inSeconds % 60;
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 5),
+//       child: Text('$minutes:$seconds',
+//                textAlign: TextAlign.center,
+//                style: TextStyle(
+//                color: Colors.black,
+//                fontWeight: FontWeight.bold,
+//                fontSize: 30)));
+//     }),
