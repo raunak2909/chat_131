@@ -2,36 +2,53 @@
 
 class RegisterModal {
   String? userId;
-  String FirstName;
-  String LastName;
-  String email;
-  String phone;
+  String uFirstName;
+  String uLastName;
+  String uEmail;
+  String uPhone;
+  String uProfilePic;
+  bool isActive;
+  bool isOnline;
+
+
 
   RegisterModal({
     this.userId,
-    required this.FirstName,
-    required this.LastName,
-    required this.email,
-    required this.phone,
+    this.isActive = true,
+    this.isOnline = false,
+    this.uProfilePic = "",
+    required this.uFirstName,
+    required this.uLastName,
+    required this.uEmail,
+    required this.uPhone,
+
   });
 
   factory RegisterModal.fromJson(Map<String, dynamic> json) {
     return RegisterModal(
       userId: json['userId'],
-      FirstName: json['FirstName'],
-      LastName: json['LastName'],
-      email: json['email'],
-      phone: json['phone'],
+      uPhone: json['uPhone'],
+      uEmail: json['uEmail'],
+      uFirstName: json['uFirstName'],
+      uLastName: json['uLastName'],
+      isOnline: json['isOnline'],
+      isActive: json['isActive'],
+      uProfilePic: json['uProfilePic'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+
       'userId':userId,
-      'FirstName': FirstName,
-      'LasttName': LastName,
-      'email': email,
-      'phone': phone,
+      'uFirstName':uFirstName,
+      'uLastName':uLastName,
+      'uEmail':uEmail,
+      'uPhone':uPhone,
+      'uProfilePic':uProfilePic,
+      'isOnline':isOnline,
+      'isActive':isActive,
+
     };
   }
 }

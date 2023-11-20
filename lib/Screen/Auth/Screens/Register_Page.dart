@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:talklytic/Screen/Auth/Data/auth.dart';
+import 'package:talklytic/firebase/firebase_provider.dart';
 
 import '../Data/color_constants.dart';
 import 'widgets/Text_fields.dart';
@@ -170,19 +171,23 @@ class _RegisterPageScreenState extends State<RegisterPageScreen> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   try {
-                    AuthUsr().createUserWithEmailAndPassword(
+
+                    FirebaseProvider.createUserWithEmailAndPassword(
                       email: emailController.text.trim(),
                       password: passwordController.text.trim(),
-                      firstNameController: firstNameController.text.trim(),
-                      lastNameController: lastNameController.text.trim(),
-                      phoneController: phoneController.text.trim(),
-                    );
+                      firstNameValue: firstNameController.text.trim(),
+                      lastNameValue: lastNameController.text.trim(),
+                      phoneValue: phoneController.text.trim(),);
+
+                    _formKey.currentState!.reset();
+                    
                     firstNameController.clear();
                     lastNameController.clear();
                     emailController.clear();
                     phoneController.clear();
                     passwordController.clear();
                     confirmPasswordController.clear();
+
                   } on FirebaseAuthException catch (e) {
                     print('Error: ${e.code}');
                   }

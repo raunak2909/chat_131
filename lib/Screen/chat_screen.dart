@@ -5,11 +5,14 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/firebase/firebase_provider.dart';
+import 'package:talklytic/model/message_model.dart';
 
 class ChatScreen extends StatefulWidget {
   String name;
   double fontSize;
-  ChatScreen({super.key, required this.name, this.fontSize = 22});
+  String toId;
+  ChatScreen({super.key, required this.name, this.fontSize = 22, this.toId=""});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -207,7 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                         children: [
                                           Expanded(
                                             child: TextField(
-                                              // controller: sendMsgController,
+                                              controller: sendMsgController,
                                               onChanged: (text) {
                                                 setState(() {
                                                   hasContent = text.isNotEmpty;
@@ -240,15 +243,21 @@ class _ChatScreenState extends State<ChatScreen> {
                                   ),
                                   SizedBox(width: widget.fontSize),
                                   hasContent
-                                      ? CircleAvatar(
-                                          backgroundColor:
-                                              ColorConstants.purpleShade,
-                                          child: Icon(
-                                            Icons.send,
-                                            color: ColorConstants.whiteShade,
-                                            size: widget.fontSize,
+                                      ? InkWell(
+                                    onTap: (){
+                                      FirebaseProvider.sendMsg(sendMsgController.text.toString(), widget.toId);
+                                      sendMsgController.text = "";
+                                    },
+                                        child: CircleAvatar(
+                                            backgroundColor:
+                                                ColorConstants.purpleShade,
+                                            child: Icon(
+                                              Icons.send,
+                                              color: ColorConstants.whiteShade,
+                                              size: widget.fontSize,
+                                            ),
                                           ),
-                                        )
+                                      )
                                       : CircleAvatar(
                                           backgroundColor:
                                               ColorConstants.purpleShade,
@@ -284,7 +293,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                         children: [
                                           Expanded(
                                             child: TextField(
-                                              // controller: sendMsgController,
+                                              controller: sendMsgController,
                                               textAlign: TextAlign.start,
                                               decoration: InputDecoration(
                                                 border: InputBorder.none,

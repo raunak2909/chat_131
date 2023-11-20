@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Constants/dummy_data.dart';
+import 'package:talklytic/Screen/Auth/Data/RegisterModal.dart';
+import 'package:talklytic/firebase/firebase_provider.dart';
 
 import '../Auth/Data/color_constants.dart';
 import '../chat_screen.dart';
@@ -127,65 +129,81 @@ class ChatMessageList extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 6),
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: PinnedMsg.name.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(
-                    foregroundImage: NetworkImage(
-                        'https://avatars.githubusercontent.com/u/76419786?v=4'),
-                    radius: fontSize * 2.5,
-                  ),
-                  title: InkWell(
-                    onTap: () {
-                      if (MediaQuery.of(context).orientation ==
-                          Orientation.portrait) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatScreen(name: '${PinnedMsg.name[index]}'),
-                            ));
-                      }
-                    },
-                    child: Text(
-                      '${PinnedMsg.name[index]}',
-                      style: TextStyle(
-                        fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontSize: fontSize * 1.2,
-                        fontWeight: fontWeight,
-                        color: ColorConstants.blackShade,
+            child: FutureBuilder<List<RegisterModal>>(
+              future: FirebaseProvider.getAllUsers(),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    var currUser = snapshot.data![index];
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: CircleAvatar(
+                        foregroundImage: NetworkImage(currUser.uProfilePic !=
+                                ""
+                            ? 'https://avatars.githubusercontent.com/u/76419786?v=4'
+                            : "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png"),
+                        radius: fontSize * 2.5,
                       ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    'msg..',
-                    style: TextStyle(
-                      fontFamily: GoogleFonts.manrope().fontFamily,
-                      fontSize: fontSize / 1.4,
-                      color: ColorConstants.blackShade,
-                    ),
-                  ),
-                  trailing: Column(
-                    children: [
-                      // Text('${DateTime.now()}'),
-                      Text('Time'),
-                      Icon(
-                        FontAwesomeIcons.checkDouble,
-                        size: fontSize,
+                      title: InkWell(
+                        onTap: () {
+                          if (MediaQuery.of(context).orientation ==
+                              Orientation.portrait) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                      name: '${currUser.uFirstName}',
+                                    toId: currUser.userId!,
+                                  ),
+                                ));
+                          }
+                        },
+                        child: Text(
+                          '${currUser.uFirstName}',
+                          style: TextStyle(
+                            fontFamily: GoogleFonts.manrope().fontFamily,
+                            fontSize: fontSize * 1.2,
+                            fontWeight: fontWeight,
+                            color: ColorConstants.blackShade,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
+                      subtitle: Text(
+                        '${currUser.uLastName}',
+                        style: TextStyle(
+                          fontFamily: GoogleFonts.manrope().fontFamily,
+                          fontSize: fontSize / 1.4,
+                          color: ColorConstants.blackShade,
+                        ),
+                      ),
+                      trailing: Column(
+                        children: [
+                          // Text('${DateTime.now()}'),
+                          Text('Time'),
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            size: fontSize,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 );
               },
             ),
           ),
           SizedBox(height: size.height * 0.05),
-          Text(
+          /*Text(
             'All Message',
             style: TextStyle(
               fontFamily: GoogleFonts.manrope().fontFamily,
@@ -251,7 +269,7 @@ class ChatMessageList extends StatelessWidget {
                 );
               },
             ),
-          ),
+          ),*/
         ],
       ),
     );

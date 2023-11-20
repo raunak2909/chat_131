@@ -85,12 +85,12 @@ class MobileScaffold extends StatelessWidget {
                                       child: Text('Profile'))),
                               PopupMenuItem(
                                   child: GestureDetector(
-                                      onTap: () => Navigator.push(
+                                      onTap: (){},/*() => Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 AppSettingPage(),
-                                          )),
+                                          )),*/
                                       child: Text('Setting'))),
                               PopupMenuItem(
                                   child: GestureDetector(

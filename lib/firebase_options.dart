@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCRMvwxeKFG-qLxluZ1BwMBROnJJF52xHw',
-    appId: '1:178302982904:web:f57d838c82c9ff31e0790d',
-    messagingSenderId: '178302982904',
-    projectId: 'talklytic',
-    authDomain: 'talklytic.firebaseapp.com',
-    storageBucket: 'talklytic.appspot.com',
-    measurementId: 'G-DDQ1WSFSRE',
+    apiKey: 'AIzaSyA3M-tz380y9cBCLwCevbKvnoT9RTeEecQ',
+    appId: '1:785335134912:web:e94f21a9680fda52d01b25',
+    messagingSenderId: '785335134912',
+    projectId: 'talklytic131',
+    authDomain: 'talklytic131.firebaseapp.com',
+    storageBucket: 'talklytic131.appspot.com',
+    measurementId: 'G-B60GHDSK4T',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBTzr7U4K-3KtneFOtwojj1H-2LPFjQEwQ',
-    appId: '1:178302982904:android:13d9cf1c00a2c0c6e0790d',
-    messagingSenderId: '178302982904',
-    projectId: 'talklytic',
-    storageBucket: 'talklytic.appspot.com',
+    apiKey: 'AIzaSyD2ECm268qEaaWM4US4PiK3wkBlxwxK6Uc',
+    appId: '1:785335134912:android:34a98c3682d6f711d01b25',
+    messagingSenderId: '785335134912',
+    projectId: 'talklytic131',
+    storageBucket: 'talklytic131.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAdI42YdbTjnnsc04qsJBu3q8cqQJmsEok',
-    appId: '1:178302982904:ios:f3e5b5ba419d36c9e0790d',
-    messagingSenderId: '178302982904',
-    projectId: 'talklytic',
-    storageBucket: 'talklytic.appspot.com',
+    apiKey: 'AIzaSyAzBW3LrtfVdUyv0EJdny5vvW93toAjPuw',
+    appId: '1:785335134912:ios:12e9a90fef9f4d9ed01b25',
+    messagingSenderId: '785335134912',
+    projectId: 'talklytic131',
+    storageBucket: 'talklytic131.appspot.com',
     iosBundleId: 'com.example.talklytic',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAdI42YdbTjnnsc04qsJBu3q8cqQJmsEok',
-    appId: '1:178302982904:ios:fff7613005079403e0790d',
-    messagingSenderId: '178302982904',
-    projectId: 'talklytic',
-    storageBucket: 'talklytic.appspot.com',
+    apiKey: 'AIzaSyAzBW3LrtfVdUyv0EJdny5vvW93toAjPuw',
+    appId: '1:785335134912:ios:9cda4cbe4552eef6d01b25',
+    messagingSenderId: '785335134912',
+    projectId: 'talklytic131',
+    storageBucket: 'talklytic131.appspot.com',
     iosBundleId: 'com.example.talklytic.RunnerTests',
   );
 }

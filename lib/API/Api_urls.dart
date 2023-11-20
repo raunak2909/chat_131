@@ -1,6 +1,8 @@
 // ignore_for_file: file_names, camel_case_types, constant_identifier_names
 
-import 'package:talklytic/API/Giphy_API_Key.dart';
+
+
+import 'giphy_api_key.dart';
 
 class Gif_api_url {
   static const BASE_URL = 'https://api.giphy.com/v1/gifs/';

@@ -43,10 +43,10 @@ class AuthUsr {
       _firebaseStrore.collection('users').doc(_firebase.currentUser!.uid).set(
           RegisterModal(
                   userId: _firebase.currentUser!.uid,
-                  FirstName: firstNameController,
-                  LastName: lastNameController,
-                  email: email,
-                  phone: phoneController)
+                  uFirstName: firstNameController,
+                  uLastName: lastNameController,
+                  uEmail: email,
+                  uPhone: phoneController)
               .toJson());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
