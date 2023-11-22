@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Screen/Auth/Data/color_constants.dart';
+import 'package:talklytic/Screen/chat_bubbles_widget.dart';
 import 'package:talklytic/firebase/firebase_provider.dart';
 import 'package:talklytic/model/message_model.dart';
 
@@ -21,9 +23,26 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController sendMsgController = TextEditingController();
   bool hasContent = false;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? chatStream;
+
+  @override
+  void initState() {
+    super.initState();
+    getChatStream();
+  }
+
+  getChatStream() async{
+    chatStream = await FirebaseProvider.getAllMessage(widget.toId);
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+
     return Scaffold(
       body: Container(
         width: size.width,
@@ -176,7 +195,24 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Column(
                     children: [
                       /// =======Msg =========///
-                      Expanded(child: Container()),
+                      Expanded(child: StreamBuilder(
+                        stream: chatStream,
+                        builder: (_, snapshot){
+                          if(snapshot.connectionState==ConnectionState.waiting){
+                            return Center(child: CircularProgressIndicator(),);
+                          }if(snapshot.hasData) {
+                            var allMessages = snapshot.data!.docs;
+                            return allMessages.isNotEmpty ? ListView
+                                .builder(
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (_, index) {
+                                  var currMsg = MessageModel.fromJson(allMessages[index].data());
+                                  return ChatBubblesWidget(msg: currMsg);
+                                }) : Container();
+                          }
+                          return Container();
+                        },
+                      )),
 
                       /// =======Text Field & more ======//
                       MediaQuery.of(context).orientation == Orientation.portrait

@@ -24,6 +24,7 @@ class FirebaseProvider {
         password: password,
       );
       print(mAuth.currentUser!.email);
+      print("uid: ${mAuth.currentUser!.uid}");
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -48,20 +49,16 @@ class FirebaseProvider {
     required String phoneValue,
   }) async {
     try {
-
       await mAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      mFirestore
-          .collection(USER_COLLECTION)
-          .doc(mAuth.currentUser!.uid)
-          .set(RegisterModal(
+      mFirestore.collection(USER_COLLECTION).doc(mAuth.currentUser!.uid).set(
+          RegisterModal(
                   userId: mAuth.currentUser!.uid,
                   uFirstName: firstNameValue,
                   uLastName: lastNameValue,
                   uEmail: email,
                   uPhone: phoneValue)
               .toJson());
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -77,63 +74,84 @@ class FirebaseProvider {
     await mAuth.signOut();
   }
 
-  static Future<List<RegisterModal>> getAllUsers() async{
-
+  static Future<List<RegisterModal>> getAllUsers() async {
     List<RegisterModal> arrUsers = [];
 
-   var arrUserData = await mFirestore
-        .collection(USER_COLLECTION)
-        .get();
+    var arrUserData = await mFirestore.collection(USER_COLLECTION).get();
 
-    for(QueryDocumentSnapshot<Map<String, dynamic>> eachUser in arrUserData.docs){
+    for (QueryDocumentSnapshot<Map<String, dynamic>> eachUser
+        in arrUserData.docs) {
       var dataModel = RegisterModal.fromJson(eachUser.data());
-      if(dataModel.userId!=mAuth.currentUser!.uid){
+      if (dataModel.userId != mAuth.currentUser!.uid) {
         arrUsers.add(dataModel);
       }
-
-
     }
 
     return arrUsers;
-
-
   }
 
-  static List<String> createChatID(String fromId, String toId){
-    return ["${fromId}_$toId", "${toId}_$fromId"];
+  static signOutUser(){
+    mAuth.signOut();
   }
 
-  static Future<String> checkIfChatExists(String fromId, String toId) async{
-    var allChatRooms = await mFirestore.collection(CHATROOM_COLLECTION).get();
-
-    for(QueryDocumentSnapshot<Map<String, dynamic>> eachChatRoom in allChatRooms.docs){
-
-      if(createChatID(fromId, toId).contains(eachChatRoom.id)){
-        return eachChatRoom.id;
-      }
-
+  static String getChatID(String fromId, String toId) {
+    if(fromId.hashCode<=toId.hashCode){
+      return "${fromId}_$toId";
+    } else {
+      return "${toId}_$fromId";
     }
-    return "";
   }
 
-  static void sendMsg(String msg, String toId) async{
 
-    var chatId = await checkIfChatExists(currUserId, toId);
+
+  static void sendMsg(String msg, String toId) {
+    var chatId = getChatID(currUserId, toId);
+    print(currUserId);
+    print("Chat id : $chatId");
 
     var sentTime = DateTime.now().millisecondsSinceEpoch;
 
-    var newMessage = MessageModel(fromId: currUserId, mId: sentTime.toString(), message: msg, sent: sentTime.toString(), toId: toId);
+    var newMessage = MessageModel(
+        fromId: currUserId,
+        mId: sentTime.toString(),
+        message: msg,
+        sent: sentTime.toString(),
+        toId: toId);
 
-    if(chatId!=""){
+
       mFirestore
-          .collection(CHATROOM_COLLECTION).doc(chatId).collection("messages").doc(sentTime.toString()).set(newMessage.toJson());
-    } else {
-      mFirestore
-          .collection(CHATROOM_COLLECTION).doc(createChatID(newMessage.fromId, newMessage.toId)[0]).collection("messages").doc(sentTime.toString()).set(newMessage.toJson());
-    }
-
-
+          .collection(CHATROOM_COLLECTION)
+          .doc(chatId)
+          .collection("messages")
+          .doc(sentTime.toString())
+          .set(newMessage.toJson());
 
   }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessage(
+      String toId){
+    var chatId =  getChatID(currUserId, toId);
+    print("Chat id : $chatId");
+
+    return mFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("messages")
+        .snapshots();
+  }
+
+  static void updateReadTime(String mId, String fromId){
+    var chatId = getChatID(currUserId, fromId);
+
+    var readTime = DateTime.now().millisecondsSinceEpoch;
+
+    mFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("messages")
+        .doc(mId)
+        .update({"read" : readTime.toString()});
+  }
+
 
 }
