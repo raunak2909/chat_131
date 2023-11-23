@@ -90,19 +90,17 @@ class FirebaseProvider {
     return arrUsers;
   }
 
-  static signOutUser(){
+  static signOutUser() {
     mAuth.signOut();
   }
 
   static String getChatID(String fromId, String toId) {
-    if(fromId.hashCode<=toId.hashCode){
+    if (fromId.hashCode <= toId.hashCode) {
       return "${fromId}_$toId";
     } else {
       return "${toId}_$fromId";
     }
   }
-
-
 
   static void sendMsg(String msg, String toId) {
     var chatId = getChatID(currUserId, toId);
@@ -118,19 +116,17 @@ class FirebaseProvider {
         sent: sentTime.toString(),
         toId: toId);
 
-
-      mFirestore
-          .collection(CHATROOM_COLLECTION)
-          .doc(chatId)
-          .collection("messages")
-          .doc(sentTime.toString())
-          .set(newMessage.toJson());
-
+    mFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("messages")
+        .doc(sentTime.toString())
+        .set(newMessage.toJson());
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessage(
-      String toId){
-    var chatId =  getChatID(currUserId, toId);
+      String toId) {
+    var chatId = getChatID(currUserId, toId);
     print("Chat id : $chatId");
 
     return mFirestore
@@ -140,7 +136,7 @@ class FirebaseProvider {
         .snapshots();
   }
 
-  static void updateReadTime(String mId, String fromId){
+  static void updateReadTime(String mId, String fromId) {
     var chatId = getChatID(currUserId, fromId);
 
     var readTime = DateTime.now().millisecondsSinceEpoch;
@@ -150,8 +146,31 @@ class FirebaseProvider {
         .doc(chatId)
         .collection("messages")
         .doc(mId)
-        .update({"read" : readTime.toString()});
+        .update({"read": readTime.toString()});
   }
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getChatLastMsg(
+      String chatUserId) {
+    var chatId = getChatID(currUserId, chatUserId);
 
+    return mFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("messages")
+        .orderBy("sent", descending: true)
+        .limit(1)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUnReadCount(String chatUserId) {
+    var chatId = getChatID(currUserId, chatUserId);
+
+    return mFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("messages")
+        .where("fromId", isEqualTo: chatUserId)
+        .where("read", isEqualTo: "")
+        .snapshots();
+  }
 }

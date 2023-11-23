@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:talklytic/Constants/dummy_data.dart';
 import 'package:talklytic/Screen/Auth/Data/RegisterModal.dart';
 import 'package:talklytic/firebase/firebase_provider.dart';
+import 'package:talklytic/model/message_model.dart';
 
 import '../Auth/Data/color_constants.dart';
 import '../chat_screen.dart';
@@ -145,58 +146,76 @@ class ChatMessageList extends StatelessWidget {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     var currUser = snapshot.data![index];
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: CircleAvatar(
-                        foregroundImage: NetworkImage(currUser.uProfilePic !=
-                                ""
-                            ? 'https://avatars.githubusercontent.com/u/76419786?v=4'
-                            : "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png"),
-                        radius: fontSize * 2.5,
-                      ),
-                      title: InkWell(
-                        onTap: () {
-                          if (MediaQuery.of(context).orientation ==
-                              Orientation.portrait) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChatScreen(
-                                      name: '${currUser.uFirstName}',
-                                    toId: currUser.userId!,
+
+                    /// ChatListTile
+                    return StreamBuilder(
+                        stream:
+                            FirebaseProvider.getChatLastMsg(currUser.userId!),
+                        builder: (_, snapshot) {
+                          if (snapshot.hasData) {
+                            var messages = snapshot.data!.docs;
+                            MessageModel? lastMsgModel;
+                            if(messages.isNotEmpty){
+                              lastMsgModel = MessageModel.fromJson(messages[0].data());
+                            }
+
+
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: CircleAvatar(
+                                foregroundImage: NetworkImage(currUser
+                                            .uProfilePic !=
+                                        ""
+                                    ? 'https://avatars.githubusercontent.com/u/76419786?v=4'
+                                    : "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png"),
+                                radius: fontSize * 2.5,
+                              ),
+                              title: InkWell(
+                                onTap: () {
+                                  if (MediaQuery.of(context).orientation ==
+                                      Orientation.portrait) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatScreen(
+                                            name: '${currUser.uFirstName}',
+                                            toId: currUser.userId!,
+                                          ),
+                                        ));
+                                  }
+                                },
+                                child: Text(
+                                  '${currUser.uFirstName}',
+                                  style: TextStyle(
+                                    fontFamily:
+                                        GoogleFonts.manrope().fontFamily,
+                                    fontSize: fontSize * 1.2,
+                                    fontWeight: fontWeight,
+                                    color: ColorConstants.blackShade,
                                   ),
-                                ));
+                                ),
+                              ),
+                              subtitle: Text(
+                                messages.isEmpty
+                                    ? currUser.uLastName
+                                    : lastMsgModel!.message,
+                                style: TextStyle(
+                                  fontFamily: GoogleFonts.manrope().fontFamily,
+                                  fontSize: fontSize / 1.4,
+                                  color: ColorConstants.blackShade,
+                                ),
+                              ),
+                              trailing: Column(
+                                children: [
+                                  // Text('${DateTime.now()}'),
+                                  messages.isNotEmpty ? Text('${lastMsgModel!.sent}') : Container(width: 0, height: 0,),
+                                  messages.isNotEmpty ? showReadStatus(lastMsgModel!, currUser.userId!) : SizedBox()
+                                ],
+                              ),
+                            );
                           }
-                        },
-                        child: Text(
-                          '${currUser.uFirstName}',
-                          style: TextStyle(
-                            fontFamily: GoogleFonts.manrope().fontFamily,
-                            fontSize: fontSize * 1.2,
-                            fontWeight: fontWeight,
-                            color: ColorConstants.blackShade,
-                          ),
-                        ),
-                      ),
-                      subtitle: Text(
-                        '${currUser.uLastName}',
-                        style: TextStyle(
-                          fontFamily: GoogleFonts.manrope().fontFamily,
-                          fontSize: fontSize / 1.4,
-                          color: ColorConstants.blackShade,
-                        ),
-                      ),
-                      trailing: Column(
-                        children: [
-                          // Text('${DateTime.now()}'),
-                          Text('Time'),
-                          Icon(
-                            FontAwesomeIcons.checkDouble,
-                            size: fontSize,
-                          ),
-                        ],
-                      ),
-                    );
+                          return  Container();
+                        });
                   },
                 );
               },
@@ -273,5 +292,41 @@ class ChatMessageList extends StatelessWidget {
         ],
       ),
     );
+  }
+
+
+  Widget showReadStatus(MessageModel lastMsg, String chatUserId){
+    if(lastMsg.fromId==FirebaseProvider.currUserId){
+
+      return Icon(
+        FontAwesomeIcons.checkDouble,
+        size: fontSize,
+        color: lastMsg.read!="" ? Colors.blue : Colors.grey,
+      );
+
+    } else {
+      return StreamBuilder(
+        stream: FirebaseProvider.getUnReadCount(chatUserId),
+        builder: (_, snapshot){
+          if(snapshot.hasData){
+            var messages = snapshot.data!.docs;
+            if(messages.isEmpty){
+              return SizedBox();
+            } else {
+              return Container(
+                width: 20,
+                height: 20,
+                child: Center(child: Text('${messages.length}', style: TextStyle(color: Colors.white),),),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  shape: BoxShape.circle
+                ),
+              );
+            }
+          }
+          return SizedBox();
+        },
+      );
+    }
   }
 }

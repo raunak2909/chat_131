@@ -51,7 +51,7 @@ class _ChatBubblesWidgetState extends State<ChatBubblesWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Visibility(visible: widget.msg.read!="",
-                      child: Text(TimeOfDay.fromDateTime(
+                      child: Text(widget.msg.read=="" ? "" : TimeOfDay.fromDateTime(
                           DateTime.fromMillisecondsSinceEpoch(int.parse(widget.msg.read))).format(context).toString())),
                   SizedBox(
                     width: 7,
